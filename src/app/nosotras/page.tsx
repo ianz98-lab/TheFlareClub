@@ -51,7 +51,8 @@ export default function NosotrasPage() {
               </div>
               <div>
                 <h3 className="font-display text-3xl">{f.name}</h3>
-                <p className="text-sm text-terracotta">{f.role}</p>
+                {f.tagline && <p className="font-display text-lg italic text-terracotta">{f.tagline}</p>}
+                <p className="mt-1 text-sm text-cocoa">{f.role}</p>
                 <p className="mt-3 text-[15px] text-cocoa">{f.bio}</p>
               </div>
             </article>

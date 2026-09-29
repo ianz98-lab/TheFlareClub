@@ -24,6 +24,8 @@ export interface Instructor {
   slug: string;
   name: string;
   role: string;
+  /** Frase corta de posicionamiento (ej. "Movement, mindset & conscious living.") */
+  tagline?: string;
   photo: string;
   bio: string;
   founder?: boolean;

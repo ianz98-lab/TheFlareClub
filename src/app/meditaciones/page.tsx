@@ -11,7 +11,7 @@ export default function MeditacionesPage() {
       <PageHero
         eyebrow="Meditaciones"
         title="Calma para cualquier momento"
-        description="Por momento del día o por lo que estás sintiendo. De cinco a veinte minutos, guiadas por Sofi."
+        description="Por momento del día o por lo que estás sintiendo. De cinco a veinte minutos, guiadas por Mariana y Sofi."
         tone="sage"
         image="/images/meditacion-clase-ventanal.jpg"
       />

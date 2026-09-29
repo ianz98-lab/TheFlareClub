@@ -27,7 +27,7 @@
 
 ## Pendientes que necesitan a Ian / fundadoras
 - Precios definitivos de planes personales y moneda.
-- Bios de Mariana y Sofi + confirmar quién es quién en las fotos.
+- Confirmar quién es quién en las fotos (bios ya recibidas 28-sep).
 - Cuenta de Vimeo (Plus o superior para privacidad por dominio) y cuenta de Recurrente.
 - Textos de "Nosotras" (historia, qué significa Flare).
 - Link real del podcast en Spotify (Ian lo pasa después).
