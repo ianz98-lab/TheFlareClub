@@ -31,10 +31,10 @@ export default async function CoursePage({ params }: PageProps<"/cursos/[slug]">
   return (
     <>
       <section className="bg-sky-soft md:grid md:grid-cols-2">
-        <div className="relative aspect-[4/3] md:order-2 md:aspect-auto md:min-h-[460px]">
+        <div className="relative aspect-[3/2] md:order-2 md:aspect-auto md:min-h-[340px] md:max-h-[520px]">
           <Image src={c.cover} alt="" fill priority sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
         </div>
-        <div className="container-x flex flex-col justify-end py-10 md:py-16 lg:py-24">
+        <div className="container-x flex flex-col justify-end py-10 md:py-12 lg:py-16">
           <div>
             <Link href="/cursos" className="label link text-cocoa">← Cursos</Link>
             <div className="mt-4 flex items-center gap-3">

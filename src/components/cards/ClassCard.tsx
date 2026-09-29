@@ -16,6 +16,7 @@ export function ClassCard({ c, size = "grid" }: { c: MovementClass; size?: "grid
       meta={`${c.duration} min · ${labelOf(CLASS_TYPES, c.type)}`}
       favoriteKey={`class:${c.id}`}
       size={size}
+      aspect="aspect-[3/2]"
       badges={
         <>
           {c.isNew && <Badge tone="terracotta">Nuevo</Badge>}

@@ -29,7 +29,7 @@ export function MediaCard({
   overlay?: ReactNode;
 }) {
   return (
-    <Link href={href} className={`group block ${size === "row" ? "w-[210px] sm:w-[240px] md:w-full" : "w-full"}`}>
+    <Link href={href} className={`group block ${size === "row" ? "w-[250px] sm:w-[290px] md:w-full" : "w-full"}`}>
       <div className={`relative ${aspect} overflow-hidden rounded-xs bg-cream-deep`}>
         <Image
           src={image}

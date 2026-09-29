@@ -43,7 +43,7 @@ export default function HomePage() {
     <>
       {/* Hero a sangre */}
       <section className="relative">
-        <div className="relative aspect-[4/5] sm:aspect-[16/10] lg:aspect-[21/9]">
+        <div className="relative aspect-[4/5] max-h-[70vh] sm:aspect-[16/10] lg:aspect-[21/9]">
           <Image src="/images/fundadoras-mariana-sofi-estudio.jpg" alt="Mariana y Sofi Wer en el estudio de The Flare Club" fill priority sizes="100vw" className="object-cover object-[center_30%]" />
         </div>
         <div className="container-x -mt-24 relative sm:-mt-32 lg:-mt-40">

@@ -16,7 +16,7 @@ export default function NosotrasPage() {
   return (
     <>
       <section className="relative">
-        <div className="relative aspect-[4/5] sm:aspect-[16/9] lg:aspect-[21/9]">
+        <div className="relative aspect-[4/5] max-h-[70vh] sm:aspect-[16/9] lg:aspect-[21/9]">
           <Image src="/images/fundadoras-mariana-sofi-estudio.jpg" alt="Mariana y Sofi Wer" fill priority sizes="100vw" className="object-cover object-[center_25%]" />
         </div>
         <div className="container-x relative -mt-20 sm:-mt-28">

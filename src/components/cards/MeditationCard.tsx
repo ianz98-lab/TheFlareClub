@@ -15,7 +15,7 @@ export function MeditationCard({ m, size = "grid" }: { m: Meditation; size?: "gr
       meta={`${m.duration} min · ${labelOf(MOMENTS, m.moment)}`}
       favoriteKey={`meditation:${m.id}`}
       size={size}
-      aspect="aspect-square"
+      aspect="aspect-[4/3]"
       badges={
         <>
                     <AccessBadge access={m.access} />

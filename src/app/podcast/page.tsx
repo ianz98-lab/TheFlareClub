@@ -11,7 +11,7 @@ export default function PodcastPage() {
   return (
     <>
       <section className="bg-sage-soft md:grid md:grid-cols-2">
-        <div className="container-x flex flex-col justify-end py-10 md:py-16 lg:py-24">
+        <div className="container-x flex flex-col justify-end py-10 md:py-12 lg:py-16">
           <p className="label text-cocoa">Podcast · por {PODCAST.host}</p>
           <h1 className="mt-3 font-display text-6xl leading-[0.95] sm:text-7xl lg:text-8xl">{PODCAST.title}</h1>
           <p className="mt-6 max-w-md text-[15px] leading-relaxed text-cocoa sm:text-base">{PODCAST.description}</p>
@@ -19,7 +19,7 @@ export default function PodcastPage() {
             Escuchar en Spotify
           </a>
         </div>
-        <div className="relative aspect-square md:aspect-auto md:min-h-[480px]">
+        <div className="relative aspect-[3/2] md:aspect-auto md:min-h-[360px] md:max-h-[560px]">
           <Image src={PODCAST.cover} alt={`${PODCAST.title}, podcast de ${PODCAST.host}`} fill priority sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
         </div>
       </section>
