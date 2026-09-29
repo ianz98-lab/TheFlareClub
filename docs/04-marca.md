@@ -36,5 +36,6 @@ Cálido, cercano, femenino sin ser infantil. Español neutro (LatAm), tuteo. Fra
 
 ## Fotos
 Las de `public/images/` son las oficiales: estudio con ventanales, tonos rosa, gris y
-crema. Las fundadoras son Mariana Wer y Sofi Wer (pendiente confirmar quién es quién en
-cada foto para las bios).
+crema. Fundadoras confirmadas por Ian (28-sep): **Mariana** es la de la clase de Barre con traje
+morado (`coach-clase-barre-vertical`); **Sofi** es la del evento con gorra
+(`coach-evento-gorra-vertical`).
