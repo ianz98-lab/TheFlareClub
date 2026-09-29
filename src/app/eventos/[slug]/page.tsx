@@ -27,11 +27,9 @@ export default async function EventPage({ params }: PageProps<"/eventos/[slug]">
   return (
     <>
       <section className="container-x pt-4 sm:pt-8">
-        <Link href="/eventos" className="mb-3 inline-flex items-center gap-1 text-sm text-cocoa hover:text-espresso">
-          <Icon name="arrow" size={16} className="rotate-180" /> Eventos
-        </Link>
+        <Link href="/eventos" className="label link text-cocoa">← Eventos</Link>
         <div className="grid gap-6 md:grid-cols-[1.2fr_0.8fr] md:gap-8 lg:gap-10">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-soft sm:aspect-[16/10]">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-xs sm:aspect-[16/10]">
             <Image src={e.image} alt="" fill priority sizes="(min-width: 1024px) 700px, 100vw" className="object-cover" />
           </div>
           <aside>
@@ -44,8 +42,8 @@ export default async function EventPage({ params }: PageProps<"/eventos/[slug]">
             </ul>
             <p className="mt-4 text-[15px] text-cocoa">{e.description}</p>
             {e.includes.length > 0 && (
-              <div className="mt-5 rounded-2xl bg-cream-deep p-4">
-                <p className="eyebrow mb-2">Qué incluye</p>
+              <div className="rule mt-6 pt-4">
+                <p className="label text-cocoa mb-2">Qué incluye</p>
                 <ul className="space-y-1 text-sm">
                   {e.includes.map((i) => (
                     <li key={i} className="flex items-center gap-2"><Icon name="check" size={15} className="text-sage" /> {i}</li>
@@ -54,12 +52,12 @@ export default async function EventPage({ params }: PageProps<"/eventos/[slug]">
               </div>
             )}
             {!isPast && (
-              <div className="mt-6 flex items-center justify-between rounded-3xl bg-espresso p-4 text-cream">
+              <div className="rule mt-6 flex items-center justify-between pt-5">
                 <div>
-                  <p className="text-xs uppercase tracking-[0.18em] text-cream/70">Entrada</p>
-                  <p className="font-display text-3xl">{formatPrice(e.price, e.currency)}</p>
+                  <p className="label text-cocoa">Entrada</p>
+                  <p className="font-display text-4xl">{formatPrice(e.price, e.currency)}</p>
                 </div>
-                <ButtonLink href={e.ticketUrl ?? "/membresia"} variant="terracotta" size="lg">
+                <ButtonLink href={e.ticketUrl ?? "/membresia"} size="lg">
                   Comprar entrada
                 </ButtonLink>
               </div>
@@ -69,10 +67,10 @@ export default async function EventPage({ params }: PageProps<"/eventos/[slug]">
       </section>
       {isPast && e.gallery && (
         <section className="container-x py-12">
-          <p className="eyebrow mb-3">Recap</p>
+          <p className="label text-cocoa mb-3">Recap</p>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
             {e.gallery.map((g, i) => (
-              <div key={i} className="relative aspect-[4/5] overflow-hidden rounded-2xl">
+              <div key={i} className="relative aspect-[4/5] overflow-hidden rounded-xs">
                 <Image src={g} alt="" fill sizes="(min-width: 640px) 33vw, 50vw" className="object-cover" />
               </div>
             ))}

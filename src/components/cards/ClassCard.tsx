@@ -18,7 +18,7 @@ export function ClassCard({ c, size = "grid" }: { c: MovementClass; size?: "grid
       size={size}
       badges={
         <>
-          {c.isNew && <Badge tone="terracotta">Nueva</Badge>}
+          {c.isNew && <Badge tone="terracotta">Nuevo</Badge>}
           <AccessBadge access={c.access} />
         </>
       }

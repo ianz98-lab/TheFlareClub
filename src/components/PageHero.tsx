@@ -9,7 +9,7 @@ const bg: Record<Tone, string> = {
   sky: "bg-sky-soft",
 };
 
-/** Cabecera de sección con color de módulo y foto opcional. */
+/** Cabecera de sección: bloque de color con título grande y foto a sangre a la derecha. */
 export function PageHero({
   eyebrow,
   title,
@@ -26,20 +26,18 @@ export function PageHero({
   children?: ReactNode;
 }) {
   return (
-    <section className={`relative overflow-hidden ${bg[tone]}`}>
-      <div className="container-x relative z-10 grid items-center gap-6 py-10 sm:py-14 md:grid-cols-[1.1fr_0.9fr] md:py-16 lg:py-20">
-        <div className="max-w-xl">
-          <p className="eyebrow mb-3">{eyebrow}</p>
-          <h1 className="font-display text-4xl leading-[1.02] text-espresso sm:text-5xl lg:text-6xl">{title}</h1>
-          {description && <p className="mt-4 text-[15px] text-cocoa sm:text-lg">{description}</p>}
-          {children && <div className="mt-6">{children}</div>}
-        </div>
-        {image && (
-          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-soft md:aspect-[5/4]">
-            <Image src={image} alt="" fill sizes="(min-width: 1024px) 560px, 100vw" className="object-cover" priority />
-          </div>
-        )}
+    <section className={`${bg[tone]} md:grid md:grid-cols-2`}>
+      <div className="container-x flex flex-col justify-end py-10 md:py-16 md:pr-10 lg:py-24">
+        <p className="label text-cocoa">{eyebrow}</p>
+        <h1 className="mt-3 font-display text-5xl leading-[0.98] sm:text-6xl lg:text-7xl">{title}</h1>
+        {description && <p className="mt-5 max-w-md text-[15px] leading-relaxed text-cocoa sm:text-base">{description}</p>}
+        {children && <div className="mt-7">{children}</div>}
       </div>
+      {image && (
+        <div className="relative aspect-[4/3] md:aspect-auto md:min-h-[420px]">
+          <Image src={image} alt="" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" priority />
+        </div>
+      )}
     </section>
   );
 }

@@ -2,11 +2,13 @@ import { ButtonLink } from "@/components/ui/Button";
 
 export default function NotFound() {
   return (
-    <section className="container-x flex min-h-[60vh] flex-col items-center justify-center py-20 text-center">
-      <p className="eyebrow mb-3">404</p>
-      <h1 className="font-display text-5xl">Esto no está aquí</h1>
-      <p className="mt-3 max-w-sm text-cocoa">Quizá el enlace cambió. Respira y vuelve al inicio.</p>
-      <ButtonLink href="/" className="mt-8">Volver al inicio</ButtonLink>
+    <section className="container-x flex min-h-[60vh] flex-col justify-center py-20">
+      <p className="label text-cocoa">Error 404</p>
+      <h1 className="mt-3 font-display text-6xl leading-none sm:text-8xl">Página no encontrada</h1>
+      <p className="mt-5 max-w-sm text-cocoa">El enlace puede haber cambiado o ya no existe.</p>
+      <ButtonLink href="/" variant="outline" className="mt-8 self-start">
+        Ir al inicio
+      </ButtonLink>
     </section>
   );
 }

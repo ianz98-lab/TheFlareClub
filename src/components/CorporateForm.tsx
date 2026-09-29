@@ -2,13 +2,11 @@
 
 import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
-import { Icon } from "@/components/ui/Icon";
 
-const field =
-  "h-12 w-full rounded-2xl border border-sand bg-white/70 px-4 text-[15px] outline-none transition-colors placeholder:text-cocoa/50 focus:border-espresso";
+const field = "h-12 w-full border-0 border-b border-espresso/30 bg-transparent px-0 text-[15px] outline-none transition-colors placeholder:text-cocoa/60 focus:border-espresso";
 
 /**
- * Formulario de cotización corporativa. Hoy guarda en memoria y muestra confirmación;
+ * Formulario de cotización corporativa. Hoy muestra confirmación;
  * en Fase 2 hace POST a /api/corporate-leads (tabla corporate_leads + email).
  */
 export function CorporateForm() {
@@ -25,16 +23,15 @@ export function CorporateForm() {
 
   if (sent) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-3xl bg-sage-soft p-10 text-center">
-        <span className="flex h-14 w-14 items-center justify-center rounded-full bg-cream text-sage"><Icon name="check" size={28} /></span>
-        <h3 className="mt-4 font-display text-3xl">Recibido</h3>
-        <p className="mt-2 max-w-sm text-cocoa">Gracias. Te escribimos en menos de 48 horas con una propuesta.</p>
+      <div className="border-t border-espresso pt-6">
+        <h3 className="font-display text-4xl">Recibido.</h3>
+        <p className="mt-3 max-w-sm text-cocoa">Gracias. Te escribimos en menos de 48 horas con una propuesta.</p>
       </div>
     );
   }
 
   return (
-    <form onSubmit={onSubmit} className="grid gap-3 rounded-3xl bg-white/60 p-5 ring-1 ring-sand/60 sm:grid-cols-2 sm:p-6">
+    <form onSubmit={onSubmit} className="grid gap-x-8 gap-y-4 sm:grid-cols-2">
       <input name="nombre" required placeholder="Nombre" className={field} autoComplete="name" />
       <input name="empresa" required placeholder="Empresa" className={field} autoComplete="organization" />
       <input name="puesto" placeholder="Puesto" className={field} autoComplete="organization-title" />
@@ -42,7 +39,9 @@ export function CorporateForm() {
       <input name="telefono" type="tel" placeholder="Teléfono" className={field} autoComplete="tel" />
       <input name="colaboradores" type="number" min={1} placeholder="Nº aprox. de colaboradores" className={field} />
       <select name="tipo" required className={field} defaultValue="">
-        <option value="" disabled>Tipo de experiencia</option>
+        <option value="" disabled>
+          Tipo de experiencia
+        </option>
         <option>Clase de Pilates o Barre</option>
         <option>Meditación guiada</option>
         <option>Journaling / Vision Boards</option>
@@ -52,12 +51,12 @@ export function CorporateForm() {
         <option>Membresías para el equipo</option>
       </select>
       <input name="fecha" type="date" className={field} aria-label="Fecha aproximada" />
-      <textarea name="mensaje" rows={4} placeholder="Mensaje / información adicional" className={`${field} h-auto py-3 sm:col-span-2`} />
-      <div className="sm:col-span-2">
-        <Button type="submit" size="lg" className="w-full" disabled={loading}>
+      <textarea name="mensaje" rows={3} placeholder="Mensaje / información adicional" className={`${field} h-auto resize-none py-3 sm:col-span-2`} />
+      <div className="mt-2 sm:col-span-2">
+        <Button type="submit" size="lg" disabled={loading}>
           {loading ? "Enviando..." : "Enviar solicitud"}
         </Button>
-        <p className="mt-2 text-center text-xs text-cocoa/80">Sin compromiso. Solo usamos tus datos para responderte.</p>
+        <p className="mt-3 text-[12px] text-cocoa">Sin compromiso. Solo usamos tus datos para responderte.</p>
       </div>
     </form>
   );

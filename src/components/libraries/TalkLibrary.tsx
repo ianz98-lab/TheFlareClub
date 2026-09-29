@@ -18,7 +18,7 @@ export function TalkLibrary() {
           <TalkCard key={t.id} t={t} />
         ))}
       </div>
-      {!items.length && <p className="rounded-2xl bg-cream-deep p-6 text-cocoa">Pronto habrá charlas en esta categoría.</p>}
+      {!items.length && <p className="rounded-xs bg-cream-deep p-6 text-cocoa">Pronto habrá charlas en esta categoría.</p>}
     </section>
   );
 }

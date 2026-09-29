@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ButtonLink } from "@/components/ui/Button";
-import { Icon, type IconName } from "@/components/ui/Icon";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Row } from "@/components/Row";
 import { ClassCard } from "@/components/cards/ClassCard";
@@ -16,25 +15,25 @@ import { talks } from "@/content/talks";
 import { upcomingEvents } from "@/content/events";
 import { latestEpisode, PODCAST } from "@/content/podcast";
 
-const QUICK: { href: string; label: string; icon: IconName; tone: string }[] = [
-  { href: "/movement", label: "Movement", icon: "move", tone: "bg-rose-soft" },
-  { href: "/meditaciones", label: "Meditaciones", icon: "leaf", tone: "bg-sage-soft" },
-  { href: "/cursos", label: "Cursos", icon: "book", tone: "bg-sky-soft" },
-  { href: "/charlas", label: "Charlas", icon: "mic", tone: "bg-sand-light" },
-  { href: "/workbooks", label: "Workbooks", icon: "file", tone: "bg-rose-soft" },
+const QUICK = [
+  { href: "/movement", label: "Movement", note: "Pilates Mat, Barre, warm-ups, stretching" },
+  { href: "/meditaciones", label: "Meditaciones", note: "Por momento del día o por cómo te sientes" },
+  { href: "/cursos", label: "Cursos", note: "Programas con módulos y workbooks" },
+  { href: "/charlas", label: "Charlas", note: "Expertas en nutrición, sueño, finanzas, relaciones" },
+  { href: "/workbooks", label: "Workbooks", note: "Journaling, resets, vision board" },
 ];
 
 const NEED = [
-  { href: "/movement?duration=5", label: "Tengo 5 minutos", hint: "Una zona, sin excusas" },
-  { href: "/movement?duration=10", label: "Tengo 10 minutos", hint: "Abs, legs o arms" },
-  { href: "/movement?duration=20", label: "Tengo 20 minutos", hint: "Upper, lower o full body" },
-  { href: "/movement?duration=30,40", label: "Quiero una clase completa", hint: "30 o 40 min" },
-  { href: "/movement?type=stretching", label: "Quiero estirarme", hint: "5 o 10 min" },
-  { href: "/meditaciones", label: "Quiero meditar", hint: "Por momento o sensación" },
+  { href: "/movement?duration=5", label: "Tengo 5 minutos" },
+  { href: "/movement?duration=10", label: "Tengo 10 minutos" },
+  { href: "/movement?duration=20", label: "Tengo 20 minutos" },
+  { href: "/movement?duration=30,40", label: "Quiero una clase completa" },
+  { href: "/movement?type=stretching", label: "Quiero estirarme" },
+  { href: "/meditaciones", label: "Quiero meditar" },
 ];
 
 export default function HomePage() {
-  const newClasses = classes.filter((c) => c.isNew || c.featured).slice(0, 6);
+  const newClasses = classes.filter((c) => c.isNew || c.featured).slice(0, 4);
   const featMed = meditations.filter((m) => m.featured).slice(0, 4);
   const featCourses = courses.slice(0, 3);
   const newTalks = talks.filter((t) => t.isNew || t.featured).slice(0, 3);
@@ -42,95 +41,69 @@ export default function HomePage() {
 
   return (
     <>
-      {/* ---------- HERO ---------- */}
-      <section className="grain relative overflow-hidden bg-cream">
-        <div className="container-x grid gap-8 pt-6 pb-10 sm:pt-10 md:grid-cols-[1fr_1.05fr] md:items-center md:gap-10 md:py-14 lg:gap-12 lg:py-16">
-          <div className="order-2 md:order-1">
-            <p className="eyebrow rise mb-3">Pilates · Barre · Meditación · Comunidad</p>
-            <h1 className="rise rise-1 font-display text-[2.75rem] leading-[0.98] text-espresso sm:text-6xl lg:text-7xl">
-              Volver a ti,
-              <br />
-              <em className="text-terracotta">a tu ritmo.</em>
+      {/* Hero a sangre */}
+      <section className="relative">
+        <div className="relative aspect-[4/5] sm:aspect-[16/10] lg:aspect-[21/9]">
+          <Image src="/images/fundadoras-mariana-sofi-estudio.jpg" alt="Mariana y Sofi Wer en el estudio de The Flare Club" fill priority sizes="100vw" className="object-cover object-[center_30%]" />
+        </div>
+        <div className="container-x -mt-24 relative sm:-mt-32 lg:-mt-40">
+          <div className="max-w-3xl bg-cream pt-6 pr-6 sm:pt-8 sm:pr-10">
+            <h1 className="font-display text-[3.25rem] leading-[0.95] sm:text-7xl lg:text-8xl">
+              Pilates, Barre y calma, a tu ritmo.
             </h1>
-            <p className="rise rise-2 mt-5 max-w-md text-[15px] text-cocoa sm:text-lg">
-              Clases de Pilates Mat y Barre, meditaciones, cursos, charlas con expertas y
-              eventos. Todo en tu celular, cuando tú puedas.
+            <p className="mt-6 max-w-md text-[15px] leading-relaxed text-cocoa sm:text-base">
+              Clases de Pilates Mat y Barre, meditaciones, cursos, charlas con expertas y eventos. En tu celular, cuando tú puedas, con una comunidad que te acompaña.
             </p>
-            <div className="rise rise-3 mt-7 flex flex-wrap gap-3">
-              <ButtonLink href="/movement" variant="primary" size="lg">
-                Explorar la plataforma <Icon name="arrow" size={18} />
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              <ButtonLink href="/movement" size="lg">
+                Explorar la plataforma
               </ButtonLink>
-              <ButtonLink href="/membresia" variant="secondary" size="lg">
-                7 días gratis
+              <ButtonLink href="/membresia" variant="text">
+                Prueba 7 días gratis
               </ButtonLink>
             </div>
-            <p className="mt-4 text-xs text-cocoa/80">Sin permanencia. Cancela cuando quieras.</p>
           </div>
-          <div className="order-1 md:order-2">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-3xl shadow-soft sm:aspect-[5/4] md:aspect-[4/5]">
-              <Image
-                src="/images/fundadoras-mariana-sofi-estudio.jpg"
-                alt="Mariana y Sofi Wer, fundadoras de The Flare Club, en el estudio"
-                fill
-                priority
-                sizes="(min-width: 1024px) 640px, 100vw"
-                className="object-cover"
-              />
-              <div className="absolute inset-x-4 bottom-4 flex items-center justify-between rounded-2xl bg-cream/90 px-4 py-3 backdrop-blur">
-                <div>
-                  <p className="text-[11px] uppercase tracking-[0.18em] text-terracotta">Fundadoras</p>
-                  <p className="font-display text-xl leading-none">Mariana & Sofi Wer</p>
-                </div>
-                <Link href="/nosotras" className="text-sm font-medium text-espresso hover:text-terracotta">
-                  Conócenos
+        </div>
+      </section>
+
+      {/* Índice de módulos */}
+      <section className="container-x mt-16 sm:mt-24">
+        <ol className="rule">
+          {QUICK.map((q, i) => (
+            <li key={q.href}>
+              <Link href={q.href} className="group rule-soft flex items-baseline gap-4 py-4 sm:gap-8 sm:py-5">
+                <span className="label w-6 text-cocoa">0{i + 1}</span>
+                <span className="font-display text-3xl leading-none transition-colors group-hover:text-terracotta sm:text-5xl">{q.label}</span>
+                <span className="ml-auto hidden text-[13px] text-cocoa sm:block">{q.note}</span>
+              </Link>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      {/* ¿Qué necesitas hoy? */}
+      <section className="mt-20 bg-sand-light py-14 sm:mt-28 sm:py-20">
+        <div className="container-x grid gap-8 md:grid-cols-[1fr_1.4fr]">
+          <div>
+            <p className="label text-cocoa">Empieza aquí</p>
+            <h2 className="mt-3 font-display text-4xl leading-[1] sm:text-5xl">¿Qué necesitas hoy?</h2>
+            <p className="mt-4 max-w-xs text-[15px] text-cocoa">Elige por tiempo o por cómo te sientes. Nosotras armamos el resto.</p>
+          </div>
+          <ul className="grid gap-x-8 sm:grid-cols-2">
+            {NEED.map((n) => (
+              <li key={n.href}>
+                <Link href={n.href} className="group flex items-center justify-between border-b border-espresso/20 py-4 font-display text-2xl transition-colors hover:text-terracotta">
+                  {n.label}
+                  <span className="text-[13px] font-sans text-cocoa group-hover:text-terracotta">→</span>
                 </Link>
-              </div>
-            </div>
-          </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
-      {/* ---------- ACCESOS RÁPIDOS ---------- */}
-      <section className="container-x -mt-2 pb-4">
-        <div className="scroll-row -mx-4 px-4 sm:mx-0 sm:px-0 md:grid md:grid-cols-5">
-          {QUICK.map((q) => (
-            <Link
-              key={q.href}
-              href={q.href}
-              className={`flex min-w-[132px] items-center gap-3 rounded-2xl ${q.tone} px-4 py-3.5 transition-transform hover:-translate-y-0.5`}
-            >
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-cream/80 text-espresso">
-                <Icon name={q.icon} size={18} />
-              </span>
-              <span className="font-medium">{q.label}</span>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* ---------- ¿QUÉ NECESITAS HOY? ---------- */}
-      <section className="container-x py-10 sm:py-14">
-        <SectionHeading eyebrow="Empieza aquí" title="¿Qué necesitas hoy?" description="Elige por tiempo o por cómo te sientes. Nosotras armamos el resto." />
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-          {NEED.map((n) => (
-            <Link
-              key={n.href}
-              href={n.href}
-              className="group flex flex-col justify-between rounded-2xl bg-white/60 p-4 ring-1 ring-sand/60 transition-all hover:-translate-y-0.5 hover:shadow-card sm:p-5"
-            >
-              <span className="font-display text-xl leading-tight sm:text-2xl">{n.label}</span>
-              <span className="mt-4 flex items-center justify-between text-[13px] text-cocoa">
-                {n.hint}
-                <Icon name="arrow" size={16} className="text-terracotta transition-transform group-hover:translate-x-0.5" />
-              </span>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* ---------- CLASES NUEVAS ---------- */}
-      <section className="container-x py-6 sm:py-8">
-        <SectionHeading eyebrow="Movement" title="Clases nuevas y destacadas" href="/movement" />
+      <section className="container-x mt-20 sm:mt-28">
+        <SectionHeading eyebrow="Movement" title="Clases nuevas" href="/movement" />
         <Row>
           {newClasses.map((c) => (
             <ClassCard key={c.id} c={c} size="row" />
@@ -138,21 +111,17 @@ export default function HomePage() {
         </Row>
       </section>
 
-      {/* ---------- MEDITACIONES ---------- */}
-      <section className="mt-6 bg-sage-soft/60 py-10 sm:py-14">
-        <div className="container-x">
-          <SectionHeading eyebrow="Meditaciones" title="Meditación de la semana" description="Cinco a veinte minutos para calmar la mente y volver al presente." href="/meditaciones" />
-          <Row>
-            {featMed.map((m) => (
-              <MeditationCard key={m.id} m={m} size="row" />
-            ))}
-          </Row>
-        </div>
+      <section className="container-x mt-20 sm:mt-28">
+        <SectionHeading eyebrow="Meditaciones" title="Meditación de la semana" href="/meditaciones" />
+        <Row>
+          {featMed.map((m) => (
+            <MeditationCard key={m.id} m={m} size="row" />
+          ))}
+        </Row>
       </section>
 
-      {/* ---------- CURSOS ---------- */}
-      <section className="container-x py-10 sm:py-14">
-        <SectionHeading eyebrow="Cursos" title="Programas para ir más profundo" href="/cursos" />
+      <section className="container-x mt-20 sm:mt-28">
+        <SectionHeading eyebrow="Cursos" title="Programas" href="/cursos" />
         <Row cols="lg:grid-cols-3">
           {featCourses.map((c) => (
             <CourseCard key={c.id} c={c} size="row" />
@@ -160,9 +129,8 @@ export default function HomePage() {
         </Row>
       </section>
 
-      {/* ---------- CHARLAS ---------- */}
-      <section className="container-x py-6 sm:py-8">
-        <SectionHeading eyebrow="Charlas" title="Charlas nuevas con expertas" href="/charlas" />
+      <section className="container-x mt-20 sm:mt-28">
+        <SectionHeading eyebrow="Charlas" title="Charlas nuevas" href="/charlas" />
         <Row cols="lg:grid-cols-3">
           {newTalks.map((t) => (
             <TalkCard key={t.id} t={t} size="row" />
@@ -170,51 +138,49 @@ export default function HomePage() {
         </Row>
       </section>
 
-      {/* ---------- EVENTOS + PODCAST ---------- */}
-      <section className="container-x grid gap-8 py-10 sm:py-14 md:grid-cols-[1.2fr_0.8fr]">
+      {/* Eventos + Podcast */}
+      <section className="container-x mt-20 grid gap-14 sm:mt-28 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
         <div>
           <SectionHeading eyebrow="Eventos" title="Próximos eventos" href="/eventos" />
-          <div className="space-y-4">
+          <div className="space-y-6">
             {nextEvents.map((e) => (
               <EventCard key={e.id} e={e} />
             ))}
           </div>
         </div>
         <div>
-          <SectionHeading eyebrow="Podcast" title={PODCAST.title} href="/podcast" linkLabel="Todos los episodios" />
-          <a
-            href={latestEpisode.spotifyUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="group relative block overflow-hidden rounded-3xl bg-espresso text-cream shadow-soft"
-          >
-            <Image src={PODCAST.cover} alt="" fill sizes="500px" className="object-cover opacity-60 transition-transform duration-700 group-hover:scale-[1.03]" />
-            <div className="relative p-6 sm:p-8">
-              <p className="text-[11px] uppercase tracking-[0.18em] text-cream/80">Último episodio · Ep. {latestEpisode.number}</p>
-              <p className="mt-2 font-display text-3xl leading-tight">{latestEpisode.title}</p>
-              <p className="clamp-2 mt-2 text-sm text-cream/85">{latestEpisode.description}</p>
-              <span className="mt-6 inline-flex h-11 items-center gap-2 rounded-full bg-cream px-5 text-sm font-medium text-espresso">
-                <Icon name="spotify" size={18} className="text-[#1DB954]" /> Escuchar en Spotify
-              </span>
+          <SectionHeading eyebrow="Podcast" title={PODCAST.title} href="/podcast" linkLabel="Episodios" />
+          <a href={latestEpisode.spotifyUrl} target="_blank" rel="noreferrer" className="group block">
+            <div className="relative aspect-square overflow-hidden rounded-xs bg-cream-deep">
+              <Image src={PODCAST.cover} alt="" fill sizes="500px" className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" />
             </div>
+            <p className="label mt-4 text-cocoa">Último episodio · Ep. {latestEpisode.number}</p>
+            <p className="mt-1 font-display text-2xl leading-tight">{latestEpisode.title}</p>
+            <p className="label link mt-3 inline-block">Escuchar en Spotify</p>
           </a>
         </div>
       </section>
 
-      {/* ---------- SOBRE ---------- */}
-      <section className="container-x pb-6">
-        <div className="relative overflow-hidden rounded-3xl bg-rose-soft px-6 py-12 text-center sm:px-12 sm:py-16">
-          <p className="eyebrow mb-3">The Flare Club</p>
-          <h2 className="mx-auto max-w-2xl font-display text-3xl leading-tight sm:text-5xl">
-            Una comunidad de mujeres que eligen cuidarse sin exigirse.
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-[15px] text-cocoa sm:text-base">
-            Nacimos en un estudio con ventanales en Guatemala y hoy entrenamos, meditamos y
-            conversamos contigo desde donde estés.
-          </p>
-          <div className="mt-7 flex flex-wrap justify-center gap-3">
-            <ButtonLink href="/nosotras" variant="primary">Conoce a Mariana y Sofi</ButtonLink>
-            <ButtonLink href="/corporativo" variant="light">Flare for Companies</ButtonLink>
+      {/* Nosotras */}
+      <section className="mt-24 bg-rose-soft sm:mt-32">
+        <div className="container-x grid gap-10 py-16 md:grid-cols-2 md:items-center lg:py-24">
+          <div className="relative aspect-[4/5] overflow-hidden rounded-xs md:order-2">
+            <Image src="/images/coaches-mariana-sofi-retrato.jpg" alt="" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
+          </div>
+          <div>
+            <p className="label text-cocoa">Nosotras</p>
+            <h2 className="mt-3 font-display text-4xl leading-[0.98] sm:text-6xl">Mariana y Sofi Wer</h2>
+            <p className="mt-5 max-w-md text-[15px] leading-relaxed text-cocoa sm:text-base">
+              Coaches de Pilates Mat y Barre. Han dado clases, talleres y charlas en colegios, universidades, empresas y eventos, llevando el bienestar más allá del movimiento.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-6">
+              <ButtonLink href="/nosotras" variant="outline">
+                Conócenos
+              </ButtonLink>
+              <ButtonLink href="/corporativo" variant="text">
+                Flare for Companies
+              </ButtonLink>
+            </div>
           </div>
         </div>
       </section>

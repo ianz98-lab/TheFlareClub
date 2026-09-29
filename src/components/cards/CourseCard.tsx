@@ -3,46 +3,27 @@ import Link from "next/link";
 import type { Course } from "@/content/types";
 import { courseStats } from "@/content/courses";
 import { instructorById } from "@/content/instructors";
-import { Badge, AccessBadge } from "@/components/ui/Badge";
+import { AccessBadge } from "@/components/ui/Badge";
 import { formatPrice } from "@/lib/format";
-import { Icon } from "@/components/ui/Icon";
 
 export function CourseCard({ c, size = "grid" }: { c: Course; size?: "grid" | "row" }) {
   const s = courseStats(c);
   const inst = instructorById(c.instructorId);
   return (
-    <Link
-      href={`/cursos/${c.slug}`}
-      className={`group flex flex-col overflow-hidden rounded-3xl bg-white/60 shadow-card ring-1 ring-sand/50 transition-shadow hover:shadow-soft ${
-        size === "row" ? "w-[280px] sm:w-[320px] md:w-full" : "w-full"
-      }`}
-    >
-      <div className="relative aspect-[16/10] overflow-hidden">
-        <Image
-          src={c.cover}
-          alt=""
-          fill
-          sizes="(min-width: 1024px) 400px, 90vw"
-          className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-        />
-        <div className="absolute left-3 top-3 flex gap-1.5">
-          {c.featured && <Badge tone="sky">Destacado</Badge>}
-          <AccessBadge access={c.access} />
-        </div>
+    <Link href={`/cursos/${c.slug}`} className={`group block ${size === "row" ? "w-[280px] sm:w-[320px] md:w-full" : "w-full"}`}>
+      <div className="relative aspect-[16/11] overflow-hidden rounded-xs bg-cream-deep">
+        <Image src={c.cover} alt="" fill sizes="(min-width: 1024px) 420px, 90vw" className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" />
       </div>
-      <div className="flex flex-1 flex-col p-4 sm:p-5">
-        <p className="eyebrow mb-1.5">Curso · {inst.name}</p>
-        <h3 className="font-display text-[22px] leading-tight text-espresso">{c.title}</h3>
-        <p className="clamp-2 mt-1.5 text-[14px] text-cocoa">{c.tagline}</p>
-        <div className="mt-4 flex items-center justify-between text-[13px] text-cocoa">
-          <span className="flex items-center gap-3">
-            <span className="flex items-center gap-1"><Icon name="book" size={15} /> {s.modules} módulos</span>
-            <span className="flex items-center gap-1"><Icon name="clock" size={15} /> {s.minutes} min</span>
-          </span>
-          {c.access === "paid" && c.price && (
-            <span className="font-medium text-espresso">{formatPrice(c.price)}</span>
-          )}
+      <div className="rule-soft mt-4 pt-3">
+        <div className="flex items-center justify-between gap-3 text-cocoa">
+          <p className="label">
+            {s.modules} módulos · {s.minutes} min
+          </p>
+          {c.access === "paid" && c.price ? <span className="text-[13px]">{formatPrice(c.price)}</span> : <AccessBadge access={c.access} />}
         </div>
+        <h3 className="mt-1.5 font-display text-2xl leading-[1.08]">{c.title}</h3>
+        <p className="clamp-2 mt-1.5 text-[14px] text-cocoa">{c.tagline}</p>
+        <p className="mt-2 text-[13px] text-cocoa">Con {inst.name}</p>
       </div>
     </Link>
   );

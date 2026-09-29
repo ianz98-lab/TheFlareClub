@@ -1,65 +1,46 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { PageHero } from "@/components/PageHero";
 import { CorporateForm } from "@/components/CorporateForm";
-import { Icon, type IconName } from "@/components/ui/Icon";
+import { ButtonLink } from "@/components/ui/Button";
 import { corporatePlans } from "@/content/plans";
 
 export const metadata: Metadata = { title: "The Flare Club for Companies" };
 
-const SERVICES: { label: string; icon: IconName }[] = [
-  { label: "Pilates", icon: "move" },
-  { label: "Meditaciones", icon: "leaf" },
-  { label: "Journaling", icon: "file" },
-  { label: "Vision Boards", icon: "sparkle" },
-  { label: "Actividades creativas", icon: "sparkle" },
-  { label: "Charlas con expertos", icon: "mic" },
-  { label: "Eventos especiales", icon: "calendar" },
-  { label: "Programas anuales", icon: "book" },
-];
+const SERVICES = ["Pilates", "Meditaciones", "Journaling", "Vision Boards", "Actividades creativas", "Charlas con expertos", "Eventos especiales", "Programas anuales de bienestar"];
 
 export default function CorporativoPage() {
   return (
     <>
-      <PageHero
-        eyebrow="Corporativo"
-        title="The Flare Club for Companies"
-        description="Experiencias y programas de bienestar para equipos. Presenciales, online o híbridos, con pricing a la medida."
-        tone="sand"
-        image="/images/clase-04.jpg"
-      >
-        <a href="#cotizar" className="inline-flex h-12 items-center gap-2 rounded-full bg-espresso px-6 font-medium text-cream shadow-soft hover:bg-cocoa">
-          Cotiza una experiencia <Icon name="arrow" size={18} />
-        </a>
+      <PageHero eyebrow="Corporativo" title="The Flare Club for Companies" description="Experiencias y programas de bienestar para equipos. Presenciales, online o híbridos, con precio a la medida." tone="sand" image="/images/clase-04.jpg">
+        <ButtonLink href="#cotizar">Cotiza una experiencia</ButtonLink>
       </PageHero>
 
-      <section className="container-x py-12">
-        <p className="eyebrow mb-3">Servicios</p>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <section className="container-x mt-16 sm:mt-24 md:grid md:grid-cols-[1fr_2fr] md:gap-10">
+        <p className="label border-t border-espresso pt-4 text-cocoa">Servicios</p>
+        <ul className="mt-6 border-t border-espresso sm:columns-2 md:mt-0">
           {SERVICES.map((s) => (
-            <div key={s.label} className="flex items-center gap-3 rounded-2xl bg-white/60 p-4 ring-1 ring-sand/60">
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-sand-light text-espresso">
-                <Icon name={s.icon} size={18} />
-              </span>
-              <span className="text-[15px] font-medium">{s.label}</span>
-            </div>
+            <li key={s} className="rule-soft break-inside-avoid py-3 font-display text-2xl first:border-0">
+              {s}
+            </li>
           ))}
-        </div>
+        </ul>
       </section>
 
-      <section className="container-x pb-12">
-        <p className="eyebrow mb-3">Paquetes</p>
-        <div className="grid gap-4 md:grid-cols-3">
+      <section className="container-x mt-16 sm:mt-24">
+        <p className="label border-t border-espresso pt-4 text-cocoa">Paquetes</p>
+        <div className="mt-6 grid gap-px bg-espresso/15 md:grid-cols-3">
           {corporatePlans.map((p) => (
-            <div key={p.id} className={`flex flex-col rounded-3xl p-6 ${p.highlight ? "bg-espresso text-cream" : "bg-white/60 ring-1 ring-sand/60"}`}>
+            <div key={p.id} className={`flex flex-col p-7 ${p.highlight ? "bg-espresso text-cream" : "bg-cream"}`}>
               <h3 className="font-display text-3xl">{p.name}</h3>
-              <p className={`mt-1 text-sm ${p.highlight ? "text-cream/80" : "text-cocoa"}`}>{p.tagline}</p>
-              <ul className="mt-5 space-y-2 text-sm">
+              <p className={`mt-1 text-[14px] ${p.highlight ? "text-cream/70" : "text-cocoa"}`}>{p.tagline}</p>
+              <ul className={`mt-6 divide-y text-[14px] ${p.highlight ? "divide-cream/15" : "divide-espresso/15"}`}>
                 {p.features.map((f) => (
-                  <li key={f} className="flex gap-2"><Icon name="check" size={16} className={p.highlight ? "text-terracotta-soft" : "text-terracotta"} /> {f}</li>
+                  <li key={f} className="py-2">
+                    {f}
+                  </li>
                 ))}
               </ul>
-              <a href="#cotizar" className={`mt-6 inline-flex h-11 items-center justify-center rounded-full font-medium ${p.highlight ? "bg-cream text-espresso" : "bg-espresso text-cream"}`}>
+              <a href="#cotizar" className={`label mt-8 inline-flex h-11 items-center justify-center ${p.highlight ? "bg-cream text-espresso" : "border border-espresso"}`}>
                 {p.cta}
               </a>
             </div>
@@ -67,14 +48,11 @@ export default function CorporativoPage() {
         </div>
       </section>
 
-      <section id="cotizar" className="container-x grid gap-8 py-12 md:grid-cols-[0.9fr_1.1fr]">
+      <section id="cotizar" className="container-x mt-16 grid gap-8 border-t border-espresso pt-8 sm:mt-24 md:grid-cols-[1fr_1.4fr] md:gap-12">
         <div>
-          <p className="eyebrow mb-3">Cotiza una experiencia</p>
-          <h2 className="font-display text-4xl leading-tight">Cuéntanos de tu equipo</h2>
-          <p className="mt-3 text-[15px] text-cocoa">Te respondemos en menos de 48 horas con una propuesta y precio a la medida.</p>
-          <div className="relative mt-6 hidden aspect-[4/3] overflow-hidden rounded-3xl lg:block">
-            <Image src="/images/fundadoras-mariana-sofi-estudio.jpg" alt="" fill sizes="500px" className="object-cover" />
-          </div>
+          <p className="label text-cocoa">Cotiza una experiencia</p>
+          <h2 className="mt-3 font-display text-4xl leading-[1] sm:text-5xl">Cuéntanos de tu equipo</h2>
+          <p className="mt-4 max-w-sm text-[15px] leading-relaxed text-cocoa">Te respondemos en menos de 48 horas con una propuesta y precio a la medida.</p>
         </div>
         <CorporateForm />
       </section>

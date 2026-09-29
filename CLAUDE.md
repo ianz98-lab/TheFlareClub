@@ -10,7 +10,9 @@ podcast, eventos, corporativo). Cliente: Mariana y Sofi Wer (fundadoras); Ian co
   grandes, player a pantalla completa, nada crítico escondido en hover.
 - Idioma de la UI: español LatAm, tuteo. Nombres de clases en inglés (Pilates Flow, Barre,
   Full Body) como los usa la marca.
-- Marca: paleta y tipografía en `docs/04-marca.md`. No inventar colores fuera de los tokens.
+- Marca: paleta, tipografía y LENGUAJE VISUAL en `docs/04-marca.md`. Ian pidió que el sitio no
+  parezca hecho por IA: esquinas rectas, sin degradados sobre fotos, sin pastillas/badges con
+  fondo, sin iconos decorativos, sin animaciones de entrada. Filetes, listas y tipografía grande.
 - Contenido: tipos en `src/content/types.ts`; datos semilla en `src/content/*.ts`. Todo
   lo que hoy está en semilla mañana viene de Supabase con la misma forma.
 - Antes de agregar una sección nueva, revisar `docs/01-spec-estructura-web.md`.

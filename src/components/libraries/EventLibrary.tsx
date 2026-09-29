@@ -19,7 +19,7 @@ export function EventLibrary() {
             <EventCard key={e.id} e={e} />
           ))}
         </div>
-        {!upcoming.length && <p className="rounded-2xl bg-cream-deep p-6 text-cocoa">No hay eventos próximos en esta categoría.</p>}
+        {!upcoming.length && <p className="rounded-xs bg-cream-deep p-6 text-cocoa">No hay eventos próximos en esta categoría.</p>}
       </div>
     </section>
   );

@@ -34,9 +34,7 @@ export default async function MeditationPage({ params }: PageProps<"/meditacione
   return (
     <>
       <section className="container-x pt-4 sm:pt-8">
-        <Link href="/meditaciones" className="mb-3 inline-flex items-center gap-1 text-sm text-cocoa hover:text-espresso">
-          <Icon name="arrow" size={16} className="rotate-180" /> Meditaciones
-        </Link>
+        <Link href="/meditaciones" className="label link text-cocoa">← Meditaciones</Link>
         <div className="grid gap-6 md:grid-cols-[1.4fr_0.6fr] md:gap-8 lg:gap-10">
           <VideoPlayer video={video} title={m.title} contentKey={`meditation:${m.id}`} label={`${m.duration} min · ${labelOf(MOMENTS, m.moment)}`} />
           <aside>
@@ -52,12 +50,12 @@ export default async function MeditationPage({ params }: PageProps<"/meditacione
             <p className="mt-3 text-[15px] text-cocoa">{m.description}</p>
             <div className="mt-4 flex flex-wrap gap-1.5">
               {m.feelings.map((f) => (
-                <Link key={f} href={`/meditaciones?feeling=${f}`} className="rounded-full bg-cream-deep px-3 py-1 text-xs font-medium hover:bg-sand">
+                <Link key={f} href={`/meditaciones?feeling=${f}`} className="label link">
                   {labelOf(FEELINGS, f)}
                 </Link>
               ))}
             </div>
-            <div className="mt-5 flex items-center gap-3 rounded-2xl p-2">
+            <div className="rule-soft mt-5 flex items-center gap-3 py-4">
               <span className="relative block h-12 w-12 shrink-0 overflow-hidden rounded-full">
                 <Image src={inst.photo} alt="" fill sizes="48px" className="object-cover" />
               </span>
@@ -66,10 +64,7 @@ export default async function MeditationPage({ params }: PageProps<"/meditacione
                 <span className="block font-medium">{inst.name}</span>
               </span>
             </div>
-            <div className="mt-6 rounded-2xl bg-sage-soft p-4 text-sm">
-              <p className="font-medium">Tip</p>
-              <p className="mt-1 text-cocoa">Ponte cómoda, baja el brillo y deja el celular boca abajo. Solo escucha.</p>
-            </div>
+            <p className="rule mt-6 pt-4 text-[14px] text-cocoa">Ponte cómoda, baja el brillo y deja el celular boca abajo. Solo escucha.</p>
           </aside>
         </div>
       </section>

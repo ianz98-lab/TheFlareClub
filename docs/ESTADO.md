@@ -12,6 +12,8 @@
 ## Prototipo público
 - https://ianz98-lab.github.io/TheFlareClub/ (GitHub Pages, se actualiza con cada push a main).
 - Recoger ideas de Mariana y Sofi sobre este prototipo antes de la Fase 2.
+- 28-sep: rediseño editorial (Bodoni + Instrument Sans, sin huella de generador) y logo transparente.
+- Podcast: link real de Spotify y descripción cargados (podcast por Mariana Wer).
 
 ## Decisiones
 - 28-sep-2026: Next.js + Supabase + Recurrente + Vimeo. Repo `ianz98-lab/TheFlareClub`.

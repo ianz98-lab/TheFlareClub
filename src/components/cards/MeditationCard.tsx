@@ -18,8 +18,7 @@ export function MeditationCard({ m, size = "grid" }: { m: Meditation; size?: "gr
       aspect="aspect-square"
       badges={
         <>
-          {m.featured && <Badge tone="sage">Destacada</Badge>}
-          <AccessBadge access={m.access} />
+                    <AccessBadge access={m.access} />
         </>
       }
     />

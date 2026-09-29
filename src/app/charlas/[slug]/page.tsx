@@ -34,9 +34,7 @@ export default async function TalkPage({ params }: PageProps<"/charlas/[slug]">)
   return (
     <>
       <section className="container-x pt-4 sm:pt-8">
-        <Link href="/charlas" className="mb-3 inline-flex items-center gap-1 text-sm text-cocoa hover:text-espresso">
-          <Icon name="arrow" size={16} className="rotate-180" /> Charlas
-        </Link>
+        <Link href="/charlas" className="label link text-cocoa">← Charlas</Link>
         <div className="grid gap-6 md:grid-cols-[1.4fr_0.6fr] md:gap-8 lg:gap-10">
           <VideoPlayer video={video} title={t.title} contentKey={`talk:${t.id}`} label={`${t.durationMin} min · ${labelOf(TALK_CATEGORIES, t.category)}`} />
           <aside>
@@ -50,7 +48,7 @@ export default async function TalkPage({ params }: PageProps<"/charlas/[slug]">)
               <FavoriteButton itemKey={`talk:${t.id}`} className="bg-cream-deep" />
             </div>
             <p className="mt-3 text-[15px] text-cocoa">{t.description}</p>
-            <div className="mt-5 rounded-3xl bg-white/60 p-4 ring-1 ring-sand/60">
+            <div className="rule mt-6 pt-4">
               <div className="flex items-center gap-3">
                 <span className="relative block h-14 w-14 shrink-0 overflow-hidden rounded-full">
                   <Image src={expert.photo} alt="" fill sizes="56px" className="object-cover" />

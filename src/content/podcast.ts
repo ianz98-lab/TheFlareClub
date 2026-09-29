@@ -2,13 +2,18 @@ import type { PodcastEpisode } from "./types";
 
 export const PODCAST = {
   title: "Decide de Nuevo",
-  tagline: "Conversaciones para volver a ti.",
+  host: "Mariana Wer",
+  tagline: "Cada día es una nueva oportunidad para reinventarte.",
   description:
-    "Un podcast de The Flare Club sobre relaciones, ego, percepción y crecimiento personal. Charlas honestas para recordarte que siempre puedes decidir de nuevo.",
-  cover: "/images/coaches-mariana-sofi-retrato.jpg",
-  spotifyShowUrl: "https://open.spotify.com/",
+    "Cada día es una nueva oportunidad para reinventarte y para decidir, en cada momento, quién quieres ser. Un podcast por Mariana Wer que te dará las herramientas para actualizar tu historia, dejar de vivir en automático, y reconocer las infinitas posibilidades que habitan dentro de ti.",
+  cover: "/images/coach-clase-barre-vertical.jpg",
+  spotifyShowUrl: "https://open.spotify.com/show/1Z2XxeY3c3GnjkjQ9XljRo",
 };
 
+/**
+ * Episodios de muestra hasta conectar el feed real. Todos enlazan al show en Spotify;
+ * en Fase 2 se pueden leer del RSS de Spotify for Podcasters (título, fecha, duración).
+ */
 const mk = (
   number: number,
   title: string,

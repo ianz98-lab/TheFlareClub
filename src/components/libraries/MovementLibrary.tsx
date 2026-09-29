@@ -17,7 +17,7 @@ export function MovementLibrary() {
   return (
     <>
       <section className="container-x py-8">
-        <div className="rounded-3xl bg-white/60 p-4 ring-1 ring-sand/60 sm:p-6">
+        <div className="border-t border-espresso pt-5">
           <MovementFilters total={filtered.length} />
         </div>
       </section>
@@ -32,7 +32,7 @@ export function MovementLibrary() {
               ))}
             </div>
           ) : (
-            <p className="rounded-2xl bg-cream-deep p-6 text-cocoa">No hay clases con esa combinación todavía. Prueba quitando un filtro.</p>
+            <p className="rounded-xs bg-cream-deep p-6 text-cocoa">No hay clases con esa combinación todavía. Prueba quitando un filtro.</p>
           )}
         </section>
       ) : (

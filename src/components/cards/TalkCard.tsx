@@ -20,7 +20,7 @@ export function TalkCard({ t, size = "grid" }: { t: Talk; size?: "grid" | "row" 
       aspect="aspect-[4/3]"
       badges={
         <>
-          {t.isNew && <Badge tone="terracotta">Nueva</Badge>}
+          {t.isNew && <Badge tone="terracotta">Nuevo</Badge>}
           <AccessBadge access={t.access} />
         </>
       }

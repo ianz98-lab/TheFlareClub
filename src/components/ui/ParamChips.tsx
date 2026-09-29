@@ -4,8 +4,8 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 
 /**
- * Fila de chips que activan/desactivan un parámetro de la URL (un valor por parámetro).
- * Son enlaces: funcionan sin JS y se comparten. Cliente para poder leer la URL en export estático.
+ * Fila de filtros que activan/desactivan un parámetro de la URL (un valor por parámetro).
+ * Son enlaces: se comparten y funcionan en export estático.
  */
 export function ParamChips({
   param,
@@ -31,14 +31,14 @@ export function ParamChips({
   };
 
   const cls = (active: boolean, muted?: boolean) =>
-    `h-9 shrink-0 rounded-full border px-3.5 text-[13px] font-medium leading-9 transition-colors ${
-      active ? "border-espresso bg-espresso text-cream" : "border-sand bg-cream hover:bg-cream-deep"
-    } ${muted ? "opacity-50" : ""}`;
+    `h-9 shrink-0 rounded-xs border px-3 text-[13px] leading-9 transition-colors ${
+      active ? "border-espresso bg-espresso text-cream" : "border-sand text-espresso hover:border-espresso"
+    } ${muted ? "opacity-40" : ""}`;
 
   return (
     <div>
-      {label && <p className="mb-2 text-[11px] font-medium uppercase tracking-[0.18em] text-cocoa">{label}</p>}
-      <div className="scroll-row -mx-4 px-4 sm:mx-0 sm:flex-wrap sm:px-0">
+      {label && <p className="label mb-2 text-cocoa">{label}</p>}
+      <div className="scroll-row -mx-5 px-5 sm:mx-0 sm:flex-wrap sm:px-0">
         {allLabel && (
           <Link href={href("")} scroll={false} className={cls(!current)}>
             {allLabel}

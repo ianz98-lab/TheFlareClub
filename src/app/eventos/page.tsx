@@ -31,7 +31,7 @@ export default function EventosPage() {
           {past.map((e) => (
             <article key={e.id} className="grid gap-4 lg:grid-cols-[0.8fr_1.2fr]">
               <div>
-                <p className="eyebrow">{formatDate(e.startsAt, { year: "numeric" })}</p>
+                <p className="label text-cocoa">{formatDate(e.startsAt, { year: "numeric" })}</p>
                 <h3 className="mt-1 font-display text-3xl leading-tight">{e.title}</h3>
                 <p className="mt-2 text-[15px] text-cocoa">{e.description}</p>
                 <Link href={`/eventos/${e.slug}`} className="mt-3 inline-block text-sm font-medium text-terracotta hover:underline">
@@ -40,7 +40,7 @@ export default function EventosPage() {
               </div>
               <div className="grid grid-cols-3 gap-2">
                 {(e.gallery ?? [e.image]).slice(0, 3).map((g, i) => (
-                  <div key={i} className={`relative overflow-hidden rounded-2xl ${i === 0 ? "col-span-2 row-span-2 aspect-[4/3]" : "aspect-square"}`}>
+                  <div key={i} className={`relative overflow-hidden rounded-xs ${i === 0 ? "col-span-2 row-span-2 aspect-[4/3]" : "aspect-square"}`}>
                     <Image src={g} alt="" fill sizes="(min-width: 1024px) 300px, 45vw" className="object-cover" />
                   </div>
                 ))}

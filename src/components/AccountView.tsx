@@ -4,7 +4,6 @@ import Link from "next/link";
 import { KEYS, useLocal, type ProgressMap } from "@/lib/local-store";
 import { useFavorites } from "@/components/FavoriteButton";
 import { ButtonLink } from "@/components/ui/Button";
-import { Icon } from "@/components/ui/Icon";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Row } from "@/components/Row";
 import { ClassCard } from "@/components/cards/ClassCard";
@@ -47,31 +46,29 @@ export function AccountView() {
 
   return (
     <>
-      <section className="bg-sage-soft/60">
-        <div className="container-x flex flex-col gap-6 py-10 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center gap-4">
-            <span className="flex h-16 w-16 items-center justify-center rounded-full bg-cream font-display text-2xl text-espresso">F</span>
-            <div>
-              <p className="eyebrow">Mi cuenta</p>
-              <h1 className="font-display text-3xl leading-tight sm:text-4xl">Hola, Flare</h1>
-              <p className="text-sm text-cocoa">tu@email.com · Vista demo (sin sesión iniciada)</p>
+      <section className="container-x pt-10 sm:pt-16">
+        <p className="label text-cocoa">Mi cuenta</p>
+        <h1 className="mt-3 font-display text-5xl leading-[0.98] sm:text-7xl">Hola, Flare.</h1>
+        <p className="mt-3 text-[14px] text-cocoa">tu@email.com · Vista demo, sin sesión iniciada</p>
+        <dl className="mt-10 grid border-t border-espresso sm:grid-cols-3">
+          {[
+            ["Plan", "Flare Mensual"],
+            ["Estado", "Prueba gratis"],
+            ["Próximo cobro", "5 oct 2026"],
+          ].map(([k, v]) => (
+            <div key={k} className="rule-soft py-4 first:border-0 sm:border-0 sm:pr-6">
+              <dt className="label text-cocoa">{k}</dt>
+              <dd className="mt-1 font-display text-2xl">{v}</dd>
             </div>
-          </div>
-          <div className="rounded-3xl bg-cream p-4 sm:min-w-[300px]">
-            <div className="flex items-center justify-between">
-              <p className="text-sm font-medium">Membresía</p>
-              <span className="rounded-full bg-terracotta/10 px-2.5 py-1 text-xs font-medium text-terracotta">Prueba gratis</span>
-            </div>
-            <p className="mt-1 text-sm text-cocoa">Plan: Flare Mensual · Próximo cobro: 5 oct 2026</p>
-            <div className="mt-3 flex gap-2">
-              <ButtonLink href="/membresia" size="sm" variant="primary">Cambiar plan</ButtonLink>
-              <ButtonLink href="#" size="sm" variant="secondary">Administrar</ButtonLink>
-            </div>
-          </div>
+          ))}
+        </dl>
+        <div className="mt-2 flex gap-6 border-t border-espresso/15 pt-4">
+          <ButtonLink href="/membresia" variant="text">Cambiar plan</ButtonLink>
+          <ButtonLink href="#" variant="text">Administrar membresía</ButtonLink>
         </div>
       </section>
 
-      <section className="container-x py-10">
+      <section className="container-x mt-16 sm:mt-24">
         <SectionHeading eyebrow="Mi contenido" title="Continuar viendo" description="Retoma donde te quedaste." />
         {continueItems.length ? (
           <Row>
@@ -90,29 +87,29 @@ export function AccountView() {
         )}
       </section>
 
-      <section className="container-x py-6">
+      <section className="container-x mt-16 sm:mt-24">
         <SectionHeading title="Clases favoritas" />
         {favClasses.length ? <Row>{favClasses.map((c) => <ClassCard key={c.id} c={c} size="row" />)}</Row> : <Empty text="Toca el corazón en una clase para guardarla." href="/movement" cta="Explorar clases" />}
       </section>
 
-      <section className="container-x py-6">
+      <section className="container-x mt-16 sm:mt-24">
         <SectionHeading title="Meditaciones favoritas" />
         {favMeds.length ? <Row>{favMeds.map((m) => <MeditationCard key={m.id} m={m} size="row" />)}</Row> : <Empty text="Guarda meditaciones para tenerlas a la mano." href="/meditaciones" cta="Ver meditaciones" />}
       </section>
 
       {favTalks.length > 0 && (
-        <section className="container-x py-6">
+        <section className="container-x mt-16 sm:mt-24">
           <SectionHeading title="Charlas guardadas" />
           <Row cols="lg:grid-cols-3">{favTalks.map((t) => <TalkCard key={t.id} t={t} size="row" />)}</Row>
         </section>
       )}
 
-      <section className="container-x py-6">
+      <section className="container-x mt-16 sm:mt-24">
         <SectionHeading title="Mis cursos" description="Tu progreso se guarda automáticamente." href="/cursos" />
         <Row cols="lg:grid-cols-3">{courses.map((c) => <CourseCard key={c.id} c={c} size="row" />)}</Row>
       </section>
 
-      <section className="container-x py-6 pb-16">
+      <section className="container-x mt-16 sm:mt-24">
         <SectionHeading title="Workbooks" href="/workbooks" />
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{memberWbs.map((w) => <WorkbookCard key={w.id} w={w} />)}</div>
       </section>
@@ -122,10 +119,10 @@ export function AccountView() {
 
 function Empty({ text, href, cta }: { text: string; href: string; cta: string }) {
   return (
-    <div className="flex flex-col items-start gap-3 rounded-2xl bg-cream-deep p-5 sm:flex-row sm:items-center sm:justify-between">
+    <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-baseline sm:justify-between">
       <p className="text-[15px] text-cocoa">{text}</p>
-      <Link href={href} className="inline-flex items-center gap-1 text-sm font-medium text-terracotta">
-        {cta} <Icon name="arrow" size={15} />
+      <Link href={href} className="label link">
+        {cta}
       </Link>
     </div>
   );

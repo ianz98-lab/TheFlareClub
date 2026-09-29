@@ -42,7 +42,7 @@ export function MeditationLibrary() {
               ))}
             </div>
           ) : (
-            <p className="rounded-2xl bg-cream-deep p-6 text-cocoa">Aún no hay meditaciones con esa combinación.</p>
+            <p className="rounded-xs bg-cream-deep p-6 text-cocoa">Aún no hay meditaciones con esa combinación.</p>
           )}
         </section>
       ) : (
