@@ -1,0 +1,21 @@
+# deps / build
+node_modules/
+.next/
+out/
+build/
+*.tsbuildinfo
+next-env.d.ts
+
+# env
+.env
+.env.*
+!.env.example
+
+# misc
+.DS_Store
+*.pem
+npm-debug.log*
+.vercel
+
+# fotos originales pesadas (las versiones web viven en public/images)
+brand/fotos/_originales.zip

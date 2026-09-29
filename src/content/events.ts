@@ -1,0 +1,86 @@
+import type { FlareEvent } from "./types";
+
+export const events: FlareEvent[] = [
+  {
+    id: "ev-oct-flare",
+    slug: "flare-morning-octubre",
+    title: "Flare Morning · Pilates + Brunch",
+    image: "/images/fundadoras-mariana-sofi-estudio.jpg",
+    startsAt: "2026-10-17T08:00:00-06:00",
+    endsAt: "2026-10-17T11:00:00-06:00",
+    location: "Estudio The Flare Club, Ciudad de Guatemala",
+    description:
+      "Una mañana completa: clase de Pilates Mat con Mariana, meditación guiada con Sofi y brunch para cerrar en comunidad.",
+    price: 45,
+    currency: "USD",
+    includes: ["Clase de Pilates 45 min", "Meditación guiada", "Brunch", "Kit Flare (mat strap + journal)"],
+    category: "flare-events",
+    status: "upcoming",
+  },
+  {
+    id: "ev-nov-night",
+    slug: "night-edition-noviembre",
+    title: "Night Edition · Barre & Candlelight",
+    image: "/images/coach-clase-barre-vertical.jpg",
+    startsAt: "2026-11-06T19:00:00-06:00",
+    endsAt: "2026-11-06T21:00:00-06:00",
+    location: "Rooftop, Zona 10",
+    description:
+      "Barre a la luz de velas, playlist especial y una meditación de cierre para soltar la semana.",
+    price: 35,
+    currency: "USD",
+    includes: ["Barre 50 min", "Meditación de cierre", "Bebida de bienvenida"],
+    category: "night-editions",
+    status: "upcoming",
+  },
+  {
+    id: "ev-dic-reset",
+    slug: "end-of-year-reset",
+    title: "End of Year Reset",
+    image: "/images/meditacion-clase-ventanal.jpg",
+    startsAt: "2026-12-12T09:00:00-06:00",
+    endsAt: "2026-12-12T13:00:00-06:00",
+    location: "Por confirmar",
+    description:
+      "Taller de cierre de año: movimiento, journaling con el End of Year Reflection y vision board para el siguiente.",
+    price: 60,
+    currency: "USD",
+    includes: ["Clase de movimiento", "Workbook impreso", "Materiales de vision board", "Snacks"],
+    category: "flare-events",
+    status: "upcoming",
+  },
+  {
+    id: "ev-past-1",
+    slug: "flare-morning-agosto",
+    title: "Flare Morning · Agosto",
+    image: "/images/clase-03.jpg",
+    startsAt: "2026-08-15T08:00:00-06:00",
+    location: "Estudio The Flare Club",
+    description: "Cuarenta mujeres, ventanales, Pilates y una meditación que terminó en abrazos.",
+    price: 40,
+    currency: "USD",
+    includes: [],
+    category: "flare-events",
+    status: "past",
+    gallery: ["/images/clase-03.jpg", "/images/clase-pilates-squat-ventanal.jpg", "/images/coaches-mariana-sofi-retrato.jpg"],
+  },
+  {
+    id: "ev-past-2",
+    slug: "night-edition-julio",
+    title: "Night Edition · Julio",
+    image: "/images/coach-evento-gorra-vertical.jpg",
+    startsAt: "2026-07-10T19:00:00-06:00",
+    location: "Rooftop, Zona 10",
+    description: "Nuestra primera Night Edition. Barre, música y ciudad de fondo.",
+    price: 35,
+    currency: "USD",
+    includes: [],
+    category: "night-editions",
+    status: "past",
+    gallery: ["/images/coach-evento-gorra-vertical.jpg", "/images/coach-vertical-02.jpg", "/images/clase-04.jpg"],
+  },
+];
+
+export const upcomingEvents = () => events.filter((e) => e.status !== "past");
+export const pastEvents = () => events.filter((e) => e.status === "past");
+export const eventBySlug = (slug: string) => events.find((e) => e.slug === slug);
