@@ -14,6 +14,9 @@
 - Recoger ideas de Mariana y Sofi sobre este prototipo antes de la Fase 2.
 - 28-sep: rediseño editorial (Bodoni + Instrument Sans, sin huella de generador) y logo transparente.
 - Podcast: link real de Spotify y descripción cargados (podcast por Mariana Wer).
+- 28-sep (noche): buscador por categoría (tabs + filtros + orden, una sola grilla), constructor de
+  rutinas con transición automática y recomendaciones al final, motion moderno (Lenis, reveals,
+  parallax). Ver docs/05-buscador-y-rutinas.md.
 
 ## Decisiones
 - 28-sep-2026: Next.js + Supabase + Recurrente + Vimeo. Repo `ianz98-lab/TheFlareClub`.

@@ -26,18 +26,19 @@ Cursos sky · Charlas sand · Workbooks rose · Podcast sage · Eventos sky · C
 sand · Nosotras rose · Mi cuenta sage.
 
 ## Tipografía
-- Display: **Bodoni Moda** (serif de alto contraste, la misma familia visual del logo).
+- Display: **Instrument Serif** (serif moderna de alto contraste; Bodoni se sintió "de periódico").
 - Cuerpo/UI: **Instrument Sans** (neutra, sin personalidad geométrica).
 - Etiquetas pequeñas en versalitas (`.label`) solo para meta y navegación.
 - Acento script: solo en el logo (imagen); no se usa como fuente de UI.
 
 ## Lenguaje visual (rediseño 28-sep, pedido por Ian: sin huella de generador)
-- Esquinas casi rectas (2-3 px). Nada de pastillas ni cards muy redondeadas.
+- Esquinas suaves (6-10 px). Nada de pastillas ni cards muy redondeadas.
 - Fotos limpias con el texto DEBAJO; sin degradados ni texto sobre la imagen.
 - Separadores: filetes finos (`.rule`, `.rule-soft`) y listas numeradas, no cajas.
 - Botones rectangulares con texto en versalitas; enlaces subrayados finos.
 - Badges = texto pequeño de color, sin fondo. Sin iconos decorativos.
-- Sin animaciones de entrada, sin grano, sin sombras. Bloques de color planos por módulo.
+- Motion sí, pero fino: reveals al hacer scroll, parallax, header que se oculta, zoom suave.
+  Sin grano ni sombras decorativas. Bloques de color planos por módulo.
 - Hero: foto a sangre con el titular montado en un bloque crema.
 
 ## Tono

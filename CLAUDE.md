@@ -12,7 +12,8 @@ podcast, eventos, corporativo). Cliente: Mariana y Sofi Wer (fundadoras); Ian co
   Full Body) como los usa la marca.
 - Marca: paleta, tipografía y LENGUAJE VISUAL en `docs/04-marca.md`. Ian pidió que el sitio no
   parezca hecho por IA: esquinas rectas, sin degradados sobre fotos, sin pastillas/badges con
-  fondo, sin iconos decorativos, sin animaciones de entrada. Filetes, listas y tipografía grande.
+  fondo, sin iconos decorativos. Filetes, listas y tipografía grande. Motion moderno y fino (Lenis +
+  motion: reveals, parallax) porque lo estático le pareció "de periódico".
 - Contenido: tipos en `src/content/types.ts`; datos semilla en `src/content/*.ts`. Todo
   lo que hoy está en semilla mañana viene de Supabase con la misma forma.
 - Antes de agregar una sección nueva, revisar `docs/01-spec-estructura-web.md`.
