@@ -9,8 +9,8 @@ export function EventCard({ e, compact = false }: { e: FlareEvent; compact?: boo
   const d = new Date(e.startsAt);
   return (
     <Link href={`/eventos/${e.slug}`} className={`group rule-soft grid gap-4 pt-4 ${compact ? "grid-cols-[96px_1fr]" : "sm:grid-cols-[240px_1fr]"}`}>
-      <div className={`relative overflow-hidden rounded-xs bg-cream-deep ${compact ? "aspect-square" : "aspect-[4/3]"}`}>
-        <Image src={e.image} alt="" fill sizes="300px" className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" />
+      <div className={`relative card-media overflow-hidden rounded-md bg-cream-deep ${compact ? "aspect-square" : "aspect-[4/3]"}`}>
+        <Image src={e.image} alt="" fill sizes="300px" className="object-cover" />
       </div>
       <div className="flex flex-col">
         <div className="flex items-center gap-3">

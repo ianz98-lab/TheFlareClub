@@ -5,7 +5,7 @@ type Variant = "primary" | "outline" | "terracotta" | "light" | "text";
 type Size = "sm" | "md" | "lg";
 
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-xs text-[12px] font-medium uppercase tracking-[0.14em] transition-colors disabled:opacity-50 disabled:pointer-events-none whitespace-nowrap";
+  "inline-flex items-center justify-center gap-2 rounded-md text-[12px] font-medium uppercase tracking-[0.14em] transition-colors disabled:opacity-50 disabled:pointer-events-none whitespace-nowrap";
 
 const variants: Record<Variant, string> = {
   primary: "bg-espresso text-cream hover:bg-terracotta",

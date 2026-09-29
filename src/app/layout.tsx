@@ -1,19 +1,20 @@
 import type { Metadata, Viewport } from "next";
-import { Bodoni_Moda, Instrument_Sans } from "next/font/google";
+import { Instrument_Sans, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { MobileTabs } from "@/components/layout/MobileTabs";
+import { SmoothScroll } from "@/components/motion/SmoothScroll";
 
-const bodoni = Bodoni_Moda({
-  variable: "--font-bodoni",
+const serif = Instrument_Serif({
+  variable: "--font-serif",
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400"],
   style: ["normal", "italic"],
   display: "swap",
 });
 
-const instrument = Instrument_Sans({
+const sans = Instrument_Sans({
   variable: "--font-instrument",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
@@ -46,8 +47,9 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="es" className={`${bodoni.variable} ${instrument.variable} h-full`}>
+    <html lang="es" className={`${serif.variable} ${sans.variable} h-full`}>
       <body className="flex min-h-full flex-col">
+        <SmoothScroll />
         <SiteHeader />
         <main className="pb-safe flex-1">{children}</main>
         <SiteFooter />

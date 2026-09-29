@@ -2,13 +2,13 @@ export interface NavItem {
   href: string;
   label: string;
   short?: string;
-  /** color de módulo (docs/04-marca.md) */
   tone: "sand" | "rose" | "sage" | "sky";
 }
 
 export const NAV: NavItem[] = [
   { href: "/", label: "Inicio", tone: "sand" },
   { href: "/movement", label: "Movement", tone: "rose" },
+  { href: "/rutina", label: "Rutinas", tone: "sand" },
   { href: "/meditaciones", label: "Meditaciones", short: "Meditar", tone: "sage" },
   { href: "/cursos", label: "Cursos", tone: "sky" },
   { href: "/charlas", label: "Charlas", tone: "sand" },
@@ -22,9 +22,9 @@ export const NAV: NavItem[] = [
 /** Pestañas de la barra inferior móvil (máx. 5) */
 export const MOBILE_TABS = [
   { href: "/", label: "Inicio", icon: "home" },
-  { href: "/movement", label: "Movement", icon: "move" },
+  { href: "/movement", label: "Clases", icon: "move" },
+  { href: "/rutina", label: "Rutina", icon: "sparkle" },
   { href: "/meditaciones", label: "Meditar", icon: "leaf" },
-  { href: "/cursos", label: "Cursos", icon: "book" },
   { href: "/cuenta", label: "Yo", icon: "user" },
 ] as const;
 

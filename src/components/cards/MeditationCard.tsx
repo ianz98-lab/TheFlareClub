@@ -1,6 +1,6 @@
 import type { Meditation } from "@/content/types";
 import { videoById } from "@/content/videos";
-import { Badge, AccessBadge } from "@/components/ui/Badge";
+import { AccessBadge } from "@/components/ui/Badge";
 import { FEELINGS, MOMENTS, labelOf } from "@/content/taxonomies";
 import { MediaCard } from "./MediaCard";
 

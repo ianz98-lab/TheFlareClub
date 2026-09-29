@@ -11,8 +11,8 @@ export function CourseCard({ c, size = "grid" }: { c: Course; size?: "grid" | "r
   const inst = instructorById(c.instructorId);
   return (
     <Link href={`/cursos/${c.slug}`} className={`group block ${size === "row" ? "w-[280px] sm:w-[320px] md:w-full" : "w-full"}`}>
-      <div className="relative aspect-[16/11] overflow-hidden rounded-xs bg-cream-deep">
-        <Image src={c.cover} alt="" fill sizes="(min-width: 1024px) 420px, 90vw" className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]" />
+      <div className="relative aspect-[16/11] card-media overflow-hidden rounded-md bg-cream-deep">
+        <Image src={c.cover} alt="" fill sizes="(min-width: 1024px) 420px, 90vw" className="object-cover" />
       </div>
       <div className="rule-soft mt-4 pt-3">
         <div className="flex items-center justify-between gap-3 text-cocoa">

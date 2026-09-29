@@ -13,7 +13,7 @@ export function WorkbookCard({ w }: { w: Workbook }) {
   const a = ACCESS[w.access];
   return (
     <article className="rule-soft flex gap-4 pt-4 sm:block">
-      <div className="relative aspect-[3/4] w-24 shrink-0 overflow-hidden rounded-xs bg-cream-deep sm:w-full">
+      <div className="relative aspect-[3/4] w-24 shrink-0 card-media overflow-hidden rounded-md bg-cream-deep sm:w-full">
         <Image src={w.cover} alt="" fill sizes="(min-width: 640px) 320px, 100px" className="object-cover" />
         <div className="absolute inset-0 bg-espresso/20" />
         <p className="absolute inset-x-3 bottom-3 hidden font-display text-2xl leading-none text-cream sm:block">{w.title}</p>

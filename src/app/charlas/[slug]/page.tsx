@@ -5,7 +5,6 @@ import { notFound } from "next/navigation";
 import { VideoPlayer } from "@/components/VideoPlayer";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { Badge, AccessBadge } from "@/components/ui/Badge";
-import { Icon } from "@/components/ui/Icon";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Row } from "@/components/Row";
 import { TalkCard } from "@/components/cards/TalkCard";

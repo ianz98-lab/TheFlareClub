@@ -8,7 +8,7 @@ import { Icon } from "@/components/ui/Icon";
 /** Barra inferior en móvil. Se oculta en el player para dejar la pantalla limpia. */
 export function MobileTabs() {
   const pathname = usePathname();
-  if (/^\/(movement|meditaciones|charlas)\/[^/]+\/?$/.test(pathname)) return null;
+  if (/^\/(movement|meditaciones|charlas)\/[^/]+\/?$/.test(pathname) || pathname.startsWith("/rutina/reproducir")) return null;
 
   return (
     <nav aria-label="Navegación rápida" className="fixed inset-x-0 bottom-0 z-40 border-t border-espresso/10 bg-cream md:hidden" style={{ paddingBottom: "env(safe-area-inset-bottom)" }}>

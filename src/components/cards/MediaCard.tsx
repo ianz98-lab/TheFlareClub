@@ -30,13 +30,13 @@ export function MediaCard({
 }) {
   return (
     <Link href={href} className={`group block ${size === "row" ? "w-[250px] sm:w-[290px] md:w-full" : "w-full"}`}>
-      <div className={`relative ${aspect} overflow-hidden rounded-xs bg-cream-deep`}>
+      <div className={`card-media relative ${aspect} overflow-hidden rounded-md bg-cream-deep`}>
         <Image
           src={image}
           alt=""
           fill
           sizes="(min-width: 1024px) 320px, (min-width: 640px) 45vw, 70vw"
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+          className="object-cover"
         />
         {favoriteKey && <FavoriteButton itemKey={favoriteKey} size="sm" className="absolute right-2 top-2" />}
       </div>
