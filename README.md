@@ -4,6 +4,10 @@ Plataforma de bienestar on-demand: Pilates Mat, Barre, warm-ups, stretching,
 meditaciones, cursos, charlas con expertos, workbooks, podcast y eventos.
 Membresías personales con pricing claro y paquetes corporativos flexibles.
 
+## Prototipo público
+**https://ianz98-lab.github.io/TheFlareClub/** — se publica solo con cada push a `main`
+(GitHub Actions → GitHub Pages, export estático). Para que las coaches exploren y comenten.
+
 ## Stack
 - **Next.js 16** (App Router, `src/`) + **TypeScript** + **Tailwind CSS v4**
 - **Supabase** — auth, Postgres, storage (schema en `supabase/migrations/`)

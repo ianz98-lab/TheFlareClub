@@ -9,6 +9,10 @@
    textos e imágenes, usuarios y membresías.
 4. **Lanzamiento** — dominio, SEO, analytics, emails transaccionales, PWA.
 
+## Prototipo público
+- https://ianz98-lab.github.io/TheFlareClub/ (GitHub Pages, se actualiza con cada push a main).
+- Recoger ideas de Mariana y Sofi sobre este prototipo antes de la Fase 2.
+
 ## Decisiones
 - 28-sep-2026: Next.js + Supabase + Recurrente + Vimeo. Repo `ianz98-lab/TheFlareClub`.
 - 28-sep-2026: pagos con **Recurrente** (procesador guatemalteco; Stripe no opera en GT).
