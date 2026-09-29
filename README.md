@@ -7,7 +7,7 @@ Membresías personales con pricing claro y paquetes corporativos flexibles.
 ## Stack
 - **Next.js 16** (App Router, `src/`) + **TypeScript** + **Tailwind CSS v4**
 - **Supabase** — auth, Postgres, storage (schema en `supabase/migrations/`)
-- **Stripe** — membresías, entradas a eventos, workbooks de pago
+- **Recurrente** — pagos y suscripciones en Guatemala (membresías, eventos, workbooks de pago)
 - **Vimeo (privado)** — hosting de video; el sitio solo embebe, nunca aloja archivos
 - **Spotify** — el podcast redirige, no se aloja
 - Deploy pensado para **Vercel**
@@ -15,7 +15,7 @@ Membresías personales con pricing claro y paquetes corporativos flexibles.
 ## Correr en local
 ```bash
 npm install
-cp .env.example .env.local   # llenar claves cuando conectemos Supabase/Stripe
+cp .env.example .env.local   # llenar claves cuando conectemos Supabase/Recurrente
 npm run dev                  # http://localhost:3000
 ```
 

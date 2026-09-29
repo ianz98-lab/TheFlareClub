@@ -52,7 +52,7 @@ export default async function ClassPage({ params }: PageProps<"/movement/[slug]"
         <Link href="/movement" className="mb-3 inline-flex items-center gap-1 text-sm text-cocoa hover:text-espresso">
           <Icon name="arrow" size={16} className="rotate-180" /> Movement
         </Link>
-        <div className="grid gap-6 lg:grid-cols-[1.4fr_0.6fr] lg:gap-10">
+        <div className="grid gap-6 md:grid-cols-[1.4fr_0.6fr] md:gap-8 lg:gap-10">
           <div>
             <VideoPlayer video={video} title={c.title} contentKey={`class:${c.id}`} label={`${c.duration} min · ${labelOf(CLASS_TYPES, c.type)}`} />
 

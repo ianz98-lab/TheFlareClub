@@ -30,7 +30,7 @@ export default async function EventPage({ params }: PageProps<"/eventos/[slug]">
         <Link href="/eventos" className="mb-3 inline-flex items-center gap-1 text-sm text-cocoa hover:text-espresso">
           <Icon name="arrow" size={16} className="rotate-180" /> Eventos
         </Link>
-        <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:gap-10">
+        <div className="grid gap-6 md:grid-cols-[1.2fr_0.8fr] md:gap-8 lg:gap-10">
           <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-soft sm:aspect-[16/10]">
             <Image src={e.image} alt="" fill priority sizes="(min-width: 1024px) 700px, 100vw" className="object-cover" />
           </div>

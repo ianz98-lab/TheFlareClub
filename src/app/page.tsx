@@ -44,8 +44,8 @@ export default function HomePage() {
     <>
       {/* ---------- HERO ---------- */}
       <section className="grain relative overflow-hidden bg-cream">
-        <div className="container-x grid gap-8 pt-6 pb-10 sm:pt-10 lg:grid-cols-[1fr_1.05fr] lg:items-center lg:gap-12 lg:py-16">
-          <div className="order-2 lg:order-1">
+        <div className="container-x grid gap-8 pt-6 pb-10 sm:pt-10 md:grid-cols-[1fr_1.05fr] md:items-center md:gap-10 md:py-14 lg:gap-12 lg:py-16">
+          <div className="order-2 md:order-1">
             <p className="eyebrow rise mb-3">Pilates · Barre · Meditación · Comunidad</p>
             <h1 className="rise rise-1 font-display text-[2.75rem] leading-[0.98] text-espresso sm:text-6xl lg:text-7xl">
               Volver a ti,
@@ -66,8 +66,8 @@ export default function HomePage() {
             </div>
             <p className="mt-4 text-xs text-cocoa/80">Sin permanencia. Cancela cuando quieras.</p>
           </div>
-          <div className="order-1 lg:order-2">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-3xl shadow-soft sm:aspect-[5/4] lg:aspect-[4/5]">
+          <div className="order-1 md:order-2">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-3xl shadow-soft sm:aspect-[5/4] md:aspect-[4/5]">
               <Image
                 src="/images/fundadoras-mariana-sofi-estudio.jpg"
                 alt="Mariana y Sofi Wer, fundadoras de The Flare Club, en el estudio"
@@ -92,7 +92,7 @@ export default function HomePage() {
 
       {/* ---------- ACCESOS RÁPIDOS ---------- */}
       <section className="container-x -mt-2 pb-4">
-        <div className="scroll-row -mx-4 px-4 sm:mx-0 sm:grid sm:grid-cols-5 sm:px-0">
+        <div className="scroll-row -mx-4 px-4 sm:mx-0 sm:px-0 md:grid md:grid-cols-5">
           {QUICK.map((q) => (
             <Link
               key={q.href}
@@ -171,7 +171,7 @@ export default function HomePage() {
       </section>
 
       {/* ---------- EVENTOS + PODCAST ---------- */}
-      <section className="container-x grid gap-8 py-10 lg:grid-cols-[1.2fr_0.8fr] sm:py-14">
+      <section className="container-x grid gap-8 py-10 sm:py-14 md:grid-cols-[1.2fr_0.8fr]">
         <div>
           <SectionHeading eyebrow="Eventos" title="Próximos eventos" href="/eventos" />
           <div className="space-y-4">

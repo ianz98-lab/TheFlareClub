@@ -37,7 +37,7 @@ export default async function TalkPage({ params }: PageProps<"/charlas/[slug]">)
         <Link href="/charlas" className="mb-3 inline-flex items-center gap-1 text-sm text-cocoa hover:text-espresso">
           <Icon name="arrow" size={16} className="rotate-180" /> Charlas
         </Link>
-        <div className="grid gap-6 lg:grid-cols-[1.4fr_0.6fr] lg:gap-10">
+        <div className="grid gap-6 md:grid-cols-[1.4fr_0.6fr] md:gap-8 lg:gap-10">
           <VideoPlayer video={video} title={t.title} contentKey={`talk:${t.id}`} label={`${t.durationMin} min · ${labelOf(TALK_CATEGORIES, t.category)}`} />
           <aside>
             <div className="flex flex-wrap gap-1.5">

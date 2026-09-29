@@ -10,7 +10,7 @@ export default function NosotrasPage() {
   return (
     <>
       <section className="bg-rose-soft/70">
-        <div className="container-x grid gap-8 py-10 lg:grid-cols-2 lg:items-center lg:py-16">
+        <div className="container-x grid gap-8 py-10 md:grid-cols-2 md:items-center lg:py-16">
           <div>
             <p className="eyebrow mb-3">Nosotras</p>
             <h1 className="font-display text-4xl leading-[1.02] sm:text-5xl lg:text-6xl">

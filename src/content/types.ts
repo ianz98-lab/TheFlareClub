@@ -233,6 +233,8 @@ export interface FlareEvent {
 
 export interface Plan {
   id: string;
+  /** id del producto/plan en Recurrente (se llena en Fase 2) */
+  recurrenteProductId?: string;
   name: string;
   kind: "personal" | "corporate";
   price?: number;

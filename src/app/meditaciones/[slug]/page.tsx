@@ -37,7 +37,7 @@ export default async function MeditationPage({ params }: PageProps<"/meditacione
         <Link href="/meditaciones" className="mb-3 inline-flex items-center gap-1 text-sm text-cocoa hover:text-espresso">
           <Icon name="arrow" size={16} className="rotate-180" /> Meditaciones
         </Link>
-        <div className="grid gap-6 lg:grid-cols-[1.4fr_0.6fr] lg:gap-10">
+        <div className="grid gap-6 md:grid-cols-[1.4fr_0.6fr] md:gap-8 lg:gap-10">
           <VideoPlayer video={video} title={m.title} contentKey={`meditation:${m.id}`} label={`${m.duration} min · ${labelOf(MOMENTS, m.moment)}`} />
           <aside>
             <div className="flex flex-wrap gap-1.5">

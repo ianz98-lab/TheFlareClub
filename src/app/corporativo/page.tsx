@@ -67,7 +67,7 @@ export default function CorporativoPage() {
         </div>
       </section>
 
-      <section id="cotizar" className="container-x grid gap-8 py-12 lg:grid-cols-[0.9fr_1.1fr]">
+      <section id="cotizar" className="container-x grid gap-8 py-12 md:grid-cols-[0.9fr_1.1fr]">
         <div>
           <p className="eyebrow mb-3">Cotiza una experiencia</p>
           <h2 className="font-display text-4xl leading-tight">Cuéntanos de tu equipo</h2>

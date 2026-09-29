@@ -208,10 +208,10 @@ create table events (
   status event_status not null default 'upcoming',
   gallery text[] not null default '{}',
   ticket_url text,
-  stripe_price_id text
+  recurrente_product_id text
 );
 
--- ---------- Planes y membresías ----------
+-- ---------- Planes y membresías (cobro con Recurrente) ----------
 create table plans (
   id uuid primary key default gen_random_uuid(),
   slug text unique not null,
@@ -223,7 +223,7 @@ create table plans (
   tagline text,
   features text[] not null default '{}',
   highlight boolean not null default false,
-  stripe_price_id text,
+  recurrente_product_id text,
   active boolean not null default true
 );
 
@@ -232,8 +232,8 @@ create table subscriptions (
   user_id uuid not null references profiles(id) on delete cascade,
   plan_id uuid references plans(id),
   status subscription_status not null,
-  stripe_customer_id text,
-  stripe_subscription_id text unique,
+  recurrente_customer_id text,
+  recurrente_subscription_id text unique,
   current_period_end timestamptz,
   cancel_at_period_end boolean not null default false,
   created_at timestamptz not null default now()
@@ -246,7 +246,7 @@ create table purchases (
   user_id uuid not null references profiles(id) on delete cascade,
   content_type text not null,
   content_id uuid not null,
-  stripe_payment_intent text,
+  recurrente_checkout_id text,
   amount_cents int,
   created_at timestamptz not null default now(),
   unique (user_id, content_type, content_id)

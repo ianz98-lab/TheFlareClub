@@ -20,7 +20,7 @@ import { WorkbookCard } from "@/components/cards/WorkbookCard";
 
 /**
  * Mi cuenta (vista demo). Lee favoritos y progreso del navegador.
- * Fase 2: auth de Supabase, tablas favorites / watch_progress / subscriptions, portal de Stripe.
+ * Fase 2: auth de Supabase, tablas favorites / watch_progress / subscriptions, portal de Recurrente.
  */
 const EMPTY_PROGRESS: ProgressMap = {};
 

@@ -30,8 +30,8 @@ Módulo (sección del menú)   Movement · Meditaciones · Cursos · Charlas · 
 | `podcast_episodes` | title, image, description, duration, spotify_url, category | Solo enlace externo. |
 | `events` | title, slug, image, starts_at, ends_at, location, description, price, includes[], category, status, gallery[] | status: upcoming / past. |
 | `tags` + `content_tags` | tag (slug, group) ↔ (content_type, content_id) | Multi-categoría real: un video puede tener N tags. |
-| `plans` | name, kind (personal/corporate), price, period, features[], stripe_price_id | |
-| `subscriptions` | user_id, plan_id, status, current_period_end, stripe_subscription_id | |
+| `plans` | name, kind (personal/corporate), price, period, features[], recurrente_product_id | |
+| `subscriptions` | user_id, plan_id, status, current_period_end, recurrente_subscription_id | Activada por webhook de Recurrente. |
 | `favorites` | user_id, content_type, content_id | |
 | `watch_progress` | user_id, video_id, position_sec, completed | "Continuar viendo". |
 | `course_progress` | user_id, lesson_id, completed_at | |

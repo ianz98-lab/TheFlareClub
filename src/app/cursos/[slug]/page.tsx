@@ -32,8 +32,8 @@ export default async function CoursePage({ params }: PageProps<"/cursos/[slug]">
   return (
     <>
       <section className="bg-sky-soft/70">
-        <div className="container-x grid gap-6 py-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:py-14">
-          <div className="relative aspect-[16/10] overflow-hidden rounded-3xl shadow-soft lg:order-2">
+        <div className="container-x grid gap-6 py-8 md:grid-cols-[0.9fr_1.1fr] md:items-center md:py-12 lg:py-14">
+          <div className="relative aspect-[16/10] overflow-hidden rounded-3xl shadow-soft md:order-2">
             <Image src={c.cover} alt="" fill priority sizes="(min-width: 1024px) 600px, 100vw" className="object-cover" />
           </div>
           <div>
@@ -61,7 +61,7 @@ export default async function CoursePage({ params }: PageProps<"/cursos/[slug]">
         </div>
       </section>
 
-      <section id="contenido" className="container-x grid gap-10 py-10 lg:grid-cols-[1.2fr_0.8fr]">
+      <section id="contenido" className="container-x grid gap-10 py-10 md:grid-cols-[1.2fr_0.8fr]">
         <div>
           <h2 className="font-display text-3xl">Contenido del curso</h2>
           <p className="mt-2 text-[15px] text-cocoa">{c.description}</p>

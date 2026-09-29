@@ -25,3 +25,7 @@ Añadidos de pago individual: cursos premium, workbooks premium, entradas a even
 
 Todo lo corporativo entra por el formulario "Cotiza una experiencia" (`/corporativo`) y
 se gestiona como lead; el pricing se arma a medida.
+
+## Cobro
+Todo se cobra con **Recurrente** (checkout + suscripciones recurrentes, GTQ/USD). Cada plan
+guarda su `recurrente_product_id`; el webhook de Recurrente activa/cancela la membresía.

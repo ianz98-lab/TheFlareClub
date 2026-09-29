@@ -14,7 +14,7 @@ export function CourseCard({ c, size = "grid" }: { c: Course; size?: "grid" | "r
     <Link
       href={`/cursos/${c.slug}`}
       className={`group flex flex-col overflow-hidden rounded-3xl bg-white/60 shadow-card ring-1 ring-sand/50 transition-shadow hover:shadow-soft ${
-        size === "row" ? "w-[280px] sm:w-[320px]" : "w-full"
+        size === "row" ? "w-[280px] sm:w-[320px] md:w-full" : "w-full"
       }`}
     >
       <div className="relative aspect-[16/10] overflow-hidden">

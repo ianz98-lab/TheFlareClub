@@ -34,7 +34,7 @@ export function MediaCard({
   return (
     <Link
       href={href}
-      className={`group relative block ${size === "row" ? "w-[220px] sm:w-[250px]" : "w-full"}`}
+      className={`group relative block ${size === "row" ? "w-[220px] sm:w-[250px] md:w-full" : "w-full"}`}
     >
       <div className={`relative ${aspect} overflow-hidden rounded-2xl bg-cream-deep shadow-card`}>
         <Image

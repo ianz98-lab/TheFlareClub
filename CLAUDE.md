@@ -5,7 +5,7 @@ podcast, eventos, corporativo). Cliente: Mariana y Sofi Wer (fundadoras); Ian co
 
 ## Cómo trabajar aquí
 - Stack: Next.js 16 App Router (`src/`), TypeScript estricto, Tailwind v4 con tokens en
-  `src/app/globals.css`. Supabase + Stripe + Vimeo se conectan en Fase 2.
+  `src/app/globals.css`. Supabase + Recurrente + Vimeo se conectan en Fase 2.
 - **Mobile first, siempre.** Las usuarias entrenan con el celular apoyado en el piso: botones
   grandes, player a pantalla completa, nada crítico escondido en hover.
 - Idioma de la UI: español LatAm, tuteo. Nombres de clases en inglés (Pilates Flow, Barre,
@@ -24,5 +24,5 @@ Git Credential Manager de Windows; no hace falta token.
 ## Estado para Albert
 - **Estado:** Fase 1 (fundación + UX) en curso.
 - **Hitos:** 28-sep-2026 repo conectado, estructura, docs y primera versión del web app.
-- **Pendientes:** ver `docs/ESTADO.md` (precios, bios, cuentas Vimeo/Stripe, textos Nosotras).
-- **Decisiones:** Next.js + Supabase + Stripe + Vimeo; podcast solo redirige a Spotify.
+- **Pendientes:** ver `docs/ESTADO.md` (precios, bios, cuentas Vimeo/Recurrente, textos Nosotras).
+- **Decisiones:** Next.js + Supabase + Recurrente (pagos GT) + Vimeo; podcast solo redirige a Spotify. Albert: no espejar por ahora (Ian, 28-sep).
