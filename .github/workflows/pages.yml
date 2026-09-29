@@ -26,7 +26,16 @@ jobs:
       - uses: actions/configure-pages@v5
         with:
           enablement: true
-      - run: npm ci
+      # Asegura que la fuente de Pages sea "GitHub Actions" (no la rama) para que la
+      # compilación automática de Jekyll no pise el sitio exportado.
+      - name: Fijar fuente de Pages en GitHub Actions
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh api -X PUT "repos/${{ github.repository }}/pages" -f build_type=workflow
+      # npm en Windows omite del lockfile opcionales que solo existen en Linux (@emnapi/*);
+      # si npm ci falla por eso, se instala con npm install.
+      - run: npm ci --no-audit --no-fund || npm install --no-audit --no-fund
       - run: npm run build
         env:
           GITHUB_PAGES: "true"
