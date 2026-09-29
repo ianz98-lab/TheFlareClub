@@ -15,6 +15,10 @@
 - Podcast: redirección a Spotify, sin reproductor propio.
 - Datos semilla en `src/content/` hasta conectar el CMS.
 
+## Dominio y correo
+- `theflare.club` registrado en GoDaddy el 29-sep-2026 (UTC). Correo: Google Workspace
+  (verificación TXT + MX en GoDaddy). Web: apuntar a Vercel en Fase 4.
+
 ## Pendientes que necesitan a Ian / fundadoras
 - Precios definitivos de planes personales y moneda.
 - Bios de Mariana y Sofi + confirmar quién es quién en las fotos.
