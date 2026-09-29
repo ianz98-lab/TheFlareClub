@@ -1,19 +1,14 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
+import { Suspense } from "react";
 import { EpisodeRow } from "@/components/cards/EpisodeRow";
+import { PodcastLibrary } from "@/components/libraries/PodcastLibrary";
 import { Icon } from "@/components/ui/Icon";
-import { episodes, latestEpisode, PODCAST } from "@/content/podcast";
-import { PODCAST_CATEGORIES } from "@/content/taxonomies";
-import type { PodcastCategory } from "@/content/types";
+import { latestEpisode, PODCAST } from "@/content/podcast";
 
 export const metadata: Metadata = { title: `Podcast · ${PODCAST.title}` };
 
-export default async function PodcastPage({ searchParams }: PageProps<"/podcast">) {
-  const sp = await searchParams;
-  const cat = typeof sp.cat === "string" ? (sp.cat as PodcastCategory) : undefined;
-  const items = cat ? episodes.filter((e) => e.category === cat) : episodes;
-
+export default function PodcastPage() {
   return (
     <>
       <section className="bg-sage-soft/70">
@@ -49,25 +44,9 @@ export default async function PodcastPage({ searchParams }: PageProps<"/podcast"
           <p className="eyebrow mb-2">Último episodio</p>
           <EpisodeRow ep={latestEpisode} />
         </div>
-
-        <div className="scroll-row -mx-4 px-4 sm:mx-0 sm:flex-wrap sm:px-0">
-          <Link href="/podcast" className={`h-9 shrink-0 rounded-full border px-3.5 text-[13px] font-medium leading-9 ${!cat ? "border-espresso bg-espresso text-cream" : "border-sand"}`}>
-            Todos
-          </Link>
-          {PODCAST_CATEGORIES.map((c) => (
-            <Link key={c.value} href={`/podcast?cat=${c.value}`} className={`h-9 shrink-0 rounded-full border px-3.5 text-[13px] font-medium leading-9 ${cat === c.value ? "border-espresso bg-espresso text-cream" : "border-sand"}`}>
-              {c.label}
-            </Link>
-          ))}
-        </div>
-
-        <div className="mt-6 divide-y divide-sand/50">
-          {items.map((e) => (
-            <div key={e.id} className="py-2">
-              <EpisodeRow ep={e} />
-            </div>
-          ))}
-        </div>
+        <Suspense>
+          <PodcastLibrary />
+        </Suspense>
       </section>
     </>
   );
