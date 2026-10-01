@@ -23,9 +23,15 @@ podcast, eventos, corporativo). Cliente: Mariana y Sofi Wer (fundadoras); Ian co
 - Commits en español, imperativo corto ("Agrega filtros a Movement").
 - Verificar con `npm run build` antes de hacer push.
 
-## Repo
-`https://github.com/ianz98-lab/TheFlareClub` (rama `main`). Credenciales ya guardadas en
-Git Credential Manager de Windows; no hace falta token.
+## Repo: se trabaja directo en GitHub
+`https://github.com/ianz98-lab/TheFlareClub` (rama `main`). **GitHub es la única fuente de verdad** (Ian, 1-oct):
+Ian también edita desde el celular y no usa la copia local.
+- Al empezar: `git pull` en `main` antes de tocar nada.
+- Cada cambio terminado se commitea **y se sube** (`git push origin main`) en el mismo paso, sin preguntar. Nunca
+  dejar commits locales sin subir. El push publica el prototipo en GitHub Pages.
+- Credenciales ya guardadas en Windows; no hace falta pedir token. Esas credenciales NO pueden tocar
+  `.github/workflows/` (GitHub rechaza el push sin el permiso `workflow`): no commitear cambios ahí; pasárselos a
+  Ian para que edite el archivo en github.com.
 
 ## Estado para Albert
 - **Estado:** Fase 1 (fundación + UX) en curso.

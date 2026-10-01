@@ -32,7 +32,21 @@
 - 1-oct: auditoría final del prototipo, 15/20 ("bueno"; la primera, del 30-sep, dio 10/20). Sus 47 correcciones sin
   decisión pendiente están aplicadas. Verificado: tsc, lint + check-tokens, build normal y de Pages, y las 18 rutas
   principales en 390 y 1440 px sin errores de consola, sin recursos rotos y sin scroll horizontal.
-- **Commiteado en `main` el 1-oct, sin push**: publicar en GitHub Pages queda a la espera del OK de Ian.
+- Desde el 1-oct se trabaja directo en GitHub: cada cambio se sube a `main` y se publica en Pages (ver CLAUDE.md).
+- **Pendiente técnico (Ian, desde github.com):** ajuste a `.github/workflows/pages.yml`, que no se puede subir desde
+  la compu. Debajo de `workflow_dispatch:` va la publicación diaria (6:00 GT), que pasa sola los eventos vencidos a
+  "Eventos anteriores":
+  ```yaml
+    schedule:
+      - cron: "0 12 * * *"
+  ```
+  Y en el paso `npm run build`, debajo de `GITHUB_PAGES: "true"`, la URL para las vistas previas al compartir links
+  y las variables de Supabase (vacías = modo demo):
+  ```yaml
+            NEXT_PUBLIC_SITE_URL: https://ianz98-lab.github.io/TheFlareClub
+            NEXT_PUBLIC_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
+            NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ vars.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+  ```
 - **Esperan decisión de Ian o de las fundadoras:** contacto (D5), contenido de muestra (D6), foto de Mariana (D7),
   flyers con "the flow club" (D8), fecha de Legado (D9), bio de Sofi (D10), idioma de las zonas (D11), FAQ y aviso
   de privacidad (D12), Corporativo (D13), orden de Inicio y Movement (D14), reanudar membresía (D15) y cabeceras de
