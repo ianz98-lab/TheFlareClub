@@ -5,7 +5,7 @@ import type { Meditation, MovementClass, Video } from "@/content/types";
 
 /**
  * Rutinas: el usuario arma una sesión por pasos. Cada paso solo ofrece el
- * contenido que tiene sentido ahí (calentamiento → clases → stretch → cierre).
+ * contenido que tiene sentido ahí (calentamiento → clase → estiramiento → cierre).
  * Se reproduce en un solo player con transición automática entre videos.
  */
 
@@ -21,10 +21,10 @@ export interface RoutineStepDef {
 }
 
 export const STEPS: RoutineStepDef[] = [
-  { key: "warmup", title: "Calentamiento", hint: "Un short de 5 a 10 min para activar.", optional: true, max: 1 },
+  { key: "warmup", title: "Calentamiento", hint: "De 5 a 10 minutos para activar el cuerpo.", optional: true, max: 1 },
   { key: "classes", title: "Clase", hint: "Pilates o Barre. Puedes combinar hasta tres.", optional: false, max: 3 },
-  { key: "stretch", title: "Stretch", hint: "Cierra el cuerpo con un estiramiento.", optional: true, max: 1 },
-  { key: "close", title: "Cierre", hint: "Una meditación corta para volver a ti.", optional: true, max: 1 },
+  { key: "stretch", title: "Estiramiento", hint: "Cierra el cuerpo con un estiramiento.", optional: true, max: 1 },
+  { key: "close", title: "Meditación", hint: "Si quieres, una meditación corta para cerrar y volver a ti.", optional: true, max: 1 },
 ];
 
 export interface Routine {
@@ -94,45 +94,51 @@ export const totalMinutes = (r: Routine) => toQueue(r).reduce((a, q) => a + q.du
 
 export const emptyRoutine = (): Routine => ({ id: `r-${Date.now().toString(36)}`, name: "", classes: [], createdAt: Date.now() });
 
-/* ---------- rutinas rápidas ---------- */
+/* ---------- rutinas predeterminadas (CAMBIOS PAGINA WEB.docx) ---------- */
 const find = (slug: string) => classes.find((c) => c.slug === slug)?.id ?? "";
-const findMed = (slug: string) => meditations.find((m) => m.slug === slug)?.id ?? "";
 
-export const PRESETS: (Routine & { blurb: string })[] = [
+export interface RoutinePreset extends Routine {
+  /** "Reset rápido", "Express"... (va junto a los minutos: "5 min — Reset rápido") */
+  kicker: string;
+  blurb: string;
+}
+
+export const PRESETS: RoutinePreset[] = [
   {
-    id: "preset-express",
-    name: "Express 15",
-    blurb: "Warm-up corto, abs de 10 y estiramiento.",
-    warmup: find("warm-up-full-body"),
-    classes: [find("10-min-pilates-abs")],
+    id: "preset-5",
+    kicker: "Reset rápido",
+    name: "Solo 5",
+    blurb: "Unos minutos de movimiento para esos días en los que el tiempo es poco.",
+    classes: [find("5-min-pilates-abs")],
+    createdAt: 0,
+  },
+  {
+    id: "preset-15",
+    kicker: "Express",
+    name: "Muévete 15",
+    blurb: "Una rutina corta y efectiva para hacer espacio para el movimiento en tu día.",
+    warmup: find("warm-up-lower-body"),
+    classes: [find("10-min-pilates-legs")],
+    createdAt: 0,
+  },
+  {
+    id: "preset-30",
+    kicker: "Movement",
+    name: "Tu media hora",
+    blurb: "Una sesión completa para moverte, conectar con tu cuerpo y seguir con tu día.",
+    warmup: find("warm-up-lower-body"),
+    classes: [find("20-min-pilates-full-body")],
     stretch: find("stretching-full-body-5-min"),
     createdAt: 0,
   },
   {
-    id: "preset-lower",
-    name: "Lower body 35",
-    blurb: "Piernas y glúteos con cierre de stretch.",
-    warmup: find("warm-up-lower-body"),
-    classes: [find("20-min-pilates-lower-body"), find("5-min-pilates-glutes")],
-    stretch: find("stretching-lower-body-10-min"),
-    createdAt: 0,
-  },
-  {
-    id: "preset-full",
-    name: "Completa 60",
-    blurb: "Barre 40 con calentamiento, stretch y meditación.",
+    id: "preset-60",
+    kicker: "Full session",
+    name: "Una hora para ti",
+    blurb: "Calentamiento, clase y estiramiento para regalarte una sesión completa.",
     warmup: find("warm-up-full-body"),
     classes: [find("barre-40-min")],
     stretch: find("stretching-full-body-10-min"),
-    close: findMed("pausa-de-cinco"),
-    createdAt: 0,
-  },
-  {
-    id: "preset-calm",
-    name: "Suave 25",
-    blurb: "Flow de 20 y cierre para dormir mejor.",
-    classes: [find("20-min-pilates-full-body")],
-    stretch: find("stretching-full-body-5-min"),
     createdAt: 0,
   },
 ];

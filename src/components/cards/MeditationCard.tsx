@@ -10,17 +10,14 @@ export function MeditationCard({ m, size = "grid" }: { m: Meditation; size?: "gr
     <MediaCard
       href={`/meditaciones/${m.slug}`}
       image={video.thumbnail}
+      focal={video.thumbnailFocal}
       title={m.title}
       subtitle={m.feelings.map((f) => labelOf(FEELINGS, f)).join(" · ")}
       meta={`${m.duration} min · ${labelOf(MOMENTS, m.moment)}`}
       favoriteKey={`meditation:${m.id}`}
       size={size}
       aspect="aspect-[4/3]"
-      badges={
-        <>
-                    <AccessBadge access={m.access} />
-        </>
-      }
+      badges={<AccessBadge access={m.access} />}
     />
   );
 }

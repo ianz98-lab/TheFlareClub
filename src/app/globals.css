@@ -1,50 +1,143 @@
 @import "tailwindcss";
 
-@theme {
-  --color-cream: #f4ede5;
-  --color-cream-deep: #ebe1d6;
-  --color-sand: #d8c7b5;
-  --color-sand-light: #e6d9cb;
-  --color-espresso: #2f2823;
-  --color-cocoa: #6a5a50;
-  --color-terracotta: #b3654a;
-  --color-terracotta-soft: #d8a48f;
-  --color-rose: #d38a98;
-  --color-rose-soft: #efd5da;
-  --color-mauve: #75596a;
-  --color-mauve-soft: #d9c8d0;
-  --color-sage: #9aab93;
-  --color-sage-soft: #dbe2d6;
-  --color-sky: #b6c3d1;
-  --color-sky-soft: #dfe6ec;
+/* ---------- Variantes propias ----------
+ * landscape-short: celular acostado (en el piso). En px y no en rem: depende del alto físico.
+ * narrow: pantallas de menos de 360 px (o letra del navegador agrandada). En rem a propósito: con la letra
+ *   al 200 % también aplica en un celular normal. Para apilar lo que en Gloock no cabe lado a lado.
+ * header-hidden: el header se ocultó al bajar (SiteHeader pone data-header en <html>).
+ * playing: hay un video reproduciéndose (los players ponen data-playing en <html>). */
+@custom-variant landscape-short (@media (orientation: landscape) and (max-height: 500px));
+@custom-variant narrow (@media (width < 22.5rem));
+@custom-variant header-hidden (&:where(html[data-header="hidden"] *));
+@custom-variant playing (&:where(html[data-playing] *));
 
-  --font-display: var(--font-serif), "Instrument Serif", Georgia, serif;
-  --font-sans: var(--font-instrument), "Instrument Sans", system-ui, sans-serif;
+/* `static`: estos tokens se emiten siempre como variables CSS (también se leen con var() desde
+ * estilos en línea y desde este archivo). Tabla y reglas de uso en docs/04-marca.md. */
+@theme static {
+  /* ---- Paleta por ROL (decisión D2-C de Ian, 30-sep: "neutro + un acento") ----
+   * Superficies casi blancas sin tinte, tinta casi negra y el terracota del logo como ÚNICO acento
+   * (~10 % de la pantalla: acciones principales, links clave, precios, lo que pide atención).
+   * El calor lo ponen las fotos y el logo, no el fondo. Contrastes medidos en docs/04-marca.md. */
+  --color-surface: #f6f5f3; /* fondo de página */
+  --color-surface-alt: #ecebe8; /* bandas, bloques y tarjetas que necesitan separarse */
+  --color-espresso: #2f2823; /* tinta (13.3:1) y superficie oscura (footer, player, visor) */
+  --color-cocoa: #5e5651; /* texto secundario: 6.6:1 sobre surface, 6.0:1 sobre surface-alt */
+  --color-accent: #b3654a; /* terracota del logo: rellenos, filetes, texto de 24 px o más (3.95:1) */
+  --color-accent-ink: #8f4d36; /* terracota para texto chico y fondo de la acción principal (5.9:1; blanco encima 6.4:1) */
+  --color-accent-soft: #d8a48f; /* terracota claro: solo sobre espresso (6.65:1) */
+  --color-on-accent: #ffffff;
 
-  --radius-xs: 4px;
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 18px;
-  --radius-2xl: 22px;
-  --radius-3xl: 28px;
+  /* Capa semántica: el ROL, no el color. Dentro de .on-dark se redefinen para fondos oscuros. */
+  --color-ink: var(--color-espresso);
+  --color-ink-muted: var(--color-cocoa);
+  /* Filete suave: divisores y bordes de tarjeta */
+  --color-line: color-mix(in srgb, var(--color-espresso) 15%, transparent);
+  /* Filete editorial (.rule) */
+  --color-line-strong: color-mix(in srgb, var(--color-espresso) 35%, transparent);
+  /* Borde de campos, chips y checkbox: ≥3:1 (WCAG 1.4.11) sobre surface y surface-alt */
+  --color-line-input: color-mix(in srgb, var(--color-espresso) 60%, transparent);
+  --color-on-dark-muted: color-mix(in srgb, var(--color-surface) 75%, transparent);
+  --color-on-dark-line: color-mix(in srgb, var(--color-surface) 15%, transparent);
+  --color-focus: var(--color-espresso);
+  --color-error: var(--color-accent-ink);
+  /* Texto sobre un relleno de tinta (chip activo, botón al pasar el mouse) */
+  --color-on-ink: var(--color-surface);
+  /* Respuesta de controles sin relleno: al pasar el mouse (hover) y al presionar (press) */
+  --color-hover: color-mix(in srgb, var(--color-espresso) 5%, transparent);
+  --color-press: color-mix(in srgb, var(--color-espresso) 10%, transparent);
+  /* Velos (no cambian en .on-dark): scrim, detrás de diálogos y hojas; scrim-strong, sobre un video o
+   * una foto con texto encima (aviso de video de muestra, cuenta regresiva del player) */
+  --color-scrim: color-mix(in srgb, var(--color-espresso) 70%, transparent);
+  --color-scrim-strong: color-mix(in srgb, var(--color-espresso) 88%, transparent);
 
-  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Tipografía (decisión D1-A de Ian, 30-sep). Gloock: serif de alto contraste con remates suaves, solo
+   * regular y SIN itálica (no usar `italic` con font-display: el navegador la inventaría). Hanken Grotesk:
+   * texto y UI, variable 400–600, con itálica real. */
+  --font-display: var(--font-gloock), "Gloock", Georgia, serif;
+  --font-sans: var(--font-hanken), "Hanken Grotesk", system-ui, sans-serif;
+
+  /* Escala display (Gloock es más ancha que la anterior: estos topes evitan desbordes a 320 px).
+   * Tope 5.25rem (< 6rem). Uso: text-display-2xl solo el H1 de Inicio; xl los H1 de página; lg los H2;
+   * md los H3 y títulos de tarjeta destacados; sm los títulos de fila. */
+  --text-display-2xl: clamp(2.375rem, 1.55rem + 3.6vw, 5.25rem);
+  --text-display-2xl--line-height: 1;
+  --text-display-xl: clamp(2.125rem, 1.45rem + 2.9vw, 4rem);
+  --text-display-xl--line-height: 1.03;
+  --text-display-lg: clamp(1.75rem, 1.3rem + 1.9vw, 2.75rem);
+  --text-display-lg--line-height: 1.08;
+  --text-display-md: clamp(1.375rem, 1.15rem + 0.9vw, 1.875rem);
+  --text-display-md--line-height: 1.15;
+  --text-display-sm: 1.25rem;
+  --text-display-sm--line-height: 1.2;
+
+  /* Tamaños de texto en rem (crecen con la letra del navegador). Los de Tailwind cubren el resto:
+   * text-xs 12 · text-sm 14 · text-base 16 · text-lg 18. */
+  --text-caption: 0.8125rem; /* 13 px: notas legales y ayudas secundarias, nunca acciones */
+  --text-caption--line-height: 1.45;
+  --text-body-sm: 0.9375rem; /* 15 px: texto de UI, acciones y párrafos en móvil */
+  --text-body-sm--line-height: 1.55;
+  --text-lead: 1.0625rem; /* 17 px: entradilla */
+  --text-lead--line-height: 1.6;
+
+  /* Un solo radio de 6 px (decisión D3-B de Ian, 30-sep), nombrado por rol: rounded-control (botones,
+   * chips, campos, botones de ícono) y rounded-media (fotos, flyers, miniaturas). rounded-full queda
+   * solo para el botón de play y avatares. Los tamaños de Tailwind (rounded-xs…3xl) se borran: ya no
+   * generan nada y el chequeo de tokens los rechaza. */
+  --radius-*: initial;
+  --radius-control: 6px;
+  --radius-media: 6px;
+
+  /* La curva de la marca (desaceleración suave): ease-out-quint. Misma que EASE_OUT en src/lib/motion.ts. */
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 :root {
   color-scheme: light;
-  --header-h: 64px;
-}
-@media (min-width: 1024px) {
-  :root {
-    --header-h: 80px;
+
+  /* Layout. --header-h es fijo por breakpoint (no cambia al ocultar el header: ver A068 y data-header). */
+  --gutter: 1.25rem;
+  --header-h: 4rem;
+  --tabbar-h: 3.5rem;
+  /* Lo que ocupa la barra inferior móvil (con la zona segura del iPhone); 0 desde md */
+  --tabbar-space: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
+  /* Alto de barras fijas extra que tapan contenido: las fija en <html> el componente que las muestra
+   * (buscador sticky bajo el header, barra del constructor de rutinas) y las devuelve a 0 al irse. */
+  --subheader-h: 0px;
+  --bottom-bar-h: 0px;
+
+  /* Capas: usar z-(--z-header) y nunca números sueltos */
+  --z-sticky: 30; /* barras sticky y fijas del contenido (buscador, constructor) */
+  --z-header: 40;
+  --z-tabbar: 40;
+  --z-menu: 45; /* menú móvil, bajo el header */
+  --z-sheet: 50; /* hoja de filtros y su fondo */
+  --z-toast: 55; /* avisos flotantes (primer favorito): sobre las barras y hojas, bajo el visor */
+  --z-modal: 60; /* visor de fotos */
+  --z-skip: 70; /* "Saltar al contenido", por encima de todo */
+
+  /* Duraciones: copia de DUR en src/lib/motion.ts, que es la fuente (si cambia una, cambiar la otra).
+   * fast: estados (presionado, foco) · base: header, overlays, menús, hojas · slow: entradas de texto y
+   * bloques · media: cortina de una foto · settle: el zoom de la foto bajo la cortina. Nunca valores sueltos. */
+  --duration-fast: 200ms;
+  --duration-base: 450ms;
+  --duration-slow: 700ms;
+  --duration-media: 800ms;
+  --duration-settle: 1200ms;
+
+  --opacity-disabled: 0.5;
+
+  @variant sm {
+    --gutter: 2rem;
+  }
+  @variant md {
+    --tabbar-space: 0px;
+  }
+  @variant lg {
+    --gutter: 3rem;
+    --header-h: 5rem;
   }
 }
 
-html {
-  -webkit-tap-highlight-color: transparent;
-}
 html.lenis,
 html.lenis body {
   height: auto;
@@ -56,12 +149,44 @@ html.lenis body {
   overflow: hidden;
 }
 
-body {
-  background: var(--color-cream);
-  color: var(--color-espresso);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+@layer base {
+  html {
+    /* Respuesta al tocar (antes se anulaba y no había ninguna) */
+    -webkit-tap-highlight-color: var(--color-press);
+    /* El header y la barra inferior no tapan lo que recibe foco ni el destino de un #ancla (WCAG 2.4.11).
+     * Como se suma al scroll-margin de cada elemento, no usar scroll-mt-[var(--header-h)…]. */
+    scroll-padding-top: calc(var(--header-h) + var(--subheader-h) + 1rem);
+    scroll-padding-bottom: calc(var(--tabbar-space) + var(--bottom-bar-h) + 1rem);
+  }
+
+  body {
+    background: var(--color-surface);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    /* Red de seguridad para la letra al 200 %: una palabra que no cabe sola en su línea se parte en vez de
+     * desbordar la página. Solo actúa cuando hay desborde (no cambia nada a tamaño normal). */
+    overflow-wrap: break-word;
+  }
+
+  /* Foco visible en todas las superficies: el color sale de --color-focus (surface dentro de .on-dark) */
+  :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 3px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  /* Tailwind 4 deja la flecha en los <button>; los links ya muestran la mano */
+  button:not(:disabled):not([aria-disabled="true"]),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
 }
 
 @layer components {
@@ -69,42 +194,84 @@ body {
     font-family: var(--font-display);
     font-weight: 400;
     letter-spacing: -0.01em;
+    /* Una palabra larga nunca desborda (letra del navegador al 200 %, pantallas de 320 px). `anywhere` y no
+     * `break-word`: además achica el ancho mínimo del título dentro de flex y grid, que si no empuja la fila. */
+    overflow-wrap: anywhere;
+    @variant max-sm {
+      hyphens: auto;
+      hyphenate-limit-chars: 10 4 4;
+    }
   }
 
-  /* Etiqueta pequeña en versalitas: se usa con moderación (meta de cards, nav) */
+  /* Meta en versalitas: SOLO duración, fecha, tipo y los kickers del documento de las fundadoras.
+   * Acciones y links usan .link-action; labels de formulario, <Field> (src/components/ui/form.tsx). */
   .label {
-    font-size: 11px;
-    letter-spacing: 0.14em;
+    font-size: 0.8125rem; /* 13 px en móvil (como text-caption): la meta se lee con el celular lejos */
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     font-weight: 500;
+    @variant md {
+      font-size: 0.75rem;
+    }
   }
 
-  /* Filete editorial */
+  /* Enlace subrayado fino, dentro de un texto */
+  .link {
+    text-decoration-line: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+    text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+    transition: text-decoration-color var(--duration-fast) var(--ease-out-quint);
+    @media (hover: hover) {
+      &:hover {
+        text-decoration-color: currentColor;
+      }
+    }
+  }
+
+  /* Acción de texto suelta ("Ver todo", "Leer más", "Cerrar sesión"): minúscula legible, subrayado
+   * fino y 44 px de área táctil. Para separarla del texto vecino sin crecer la fila: -my-3. */
+  .link-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    min-height: 2.75rem;
+    font-size: var(--text-body-sm);
+    font-weight: 500;
+    line-height: 1.25;
+    text-decoration-line: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+    text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+    transition:
+      color var(--duration-fast) var(--ease-out-quint),
+      text-decoration-color var(--duration-fast) var(--ease-out-quint);
+    @media (hover: hover) {
+      &:hover {
+        text-decoration-color: currentColor;
+      }
+    }
+    &:active {
+      color: var(--color-ink-muted);
+    }
+  }
+
+  /* Filetes editoriales (se adaptan solos dentro de .on-dark) */
   .rule {
-    border-top: 1px solid color-mix(in srgb, var(--color-espresso) 35%, transparent);
+    border-top: 1px solid var(--color-line-strong);
   }
   .rule-soft {
-    border-top: 1px solid color-mix(in srgb, var(--color-espresso) 12%, transparent);
+    border-top: 1px solid var(--color-line);
   }
 
   .container-x {
     width: 100%;
     margin-inline: auto;
-    padding-inline: 1.25rem;
+    padding-inline: var(--gutter);
     max-width: 88rem;
   }
-  @media (min-width: 640px) {
-    .container-x {
-      padding-inline: 2rem;
-    }
-  }
-  @media (min-width: 1024px) {
-    .container-x {
-      padding-inline: 3rem;
-    }
-  }
 
-  /* Carrusel móvil sin barra */
+  /* Carrusel móvil sin barra. El padding vertical deja ver el anillo de foco (overflow lo recortaría). */
   .scroll-row {
     display: flex;
     gap: 1rem;
@@ -112,6 +279,8 @@ body {
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
+    padding-block: 0.375rem;
+    margin-block: -0.375rem;
   }
   .scroll-row::-webkit-scrollbar {
     display: none;
@@ -121,62 +290,135 @@ body {
     flex: 0 0 auto;
   }
 
+  /* Barra sticky pegada al header: sube cuando el header se oculta (data-header en <html>, sin
+   * recalcular variables de todo el documento). */
   .sticky-under-header {
     top: var(--header-h);
-    transition: top 0.35s var(--ease-out-expo);
+    transition: top var(--duration-base) var(--ease-out-quint);
+  }
+  html[data-header="hidden"] .sticky-under-header {
+    top: 0;
   }
 
-  .pb-safe {
-    padding-bottom: calc(4.5rem + env(safe-area-inset-bottom));
-  }
-  @media (min-width: 768px) {
-    .sticky-under-header {
-    top: var(--header-h);
-    transition: top 0.35s var(--ease-out-expo);
+  /* Contexto oscuro (espresso): ponerlo en el contenedor del footer, el player, la barra del constructor,
+   * el visor de fotos y los bloques espresso. Redefine los roles para que foco, filetes, campos,
+   * errores y texto atenuado se vean bien sin clases especiales. */
+  .on-dark {
+    --color-ink: var(--color-surface);
+    --color-ink-muted: var(--color-on-dark-muted);
+    --color-line: var(--color-on-dark-line);
+    --color-line-strong: color-mix(in srgb, var(--color-surface) 35%, transparent);
+    --color-line-input: color-mix(in srgb, var(--color-surface) 55%, transparent);
+    --color-focus: var(--color-surface);
+    /* Terracota claro: 6.65:1 sobre espresso */
+    --color-error: var(--color-accent-soft);
+    --color-on-ink: var(--color-espresso);
+    --color-hover: color-mix(in srgb, var(--color-surface) 5%, transparent);
+    --color-press: color-mix(in srgb, var(--color-surface) 10%, transparent);
+    -webkit-tap-highlight-color: var(--color-press);
+    color: var(--color-ink);
   }
 
-  .pb-safe {
-      padding-bottom: 0;
+  /* "Saltar al contenido": fuera de la vista hasta recibir foco */
+  .skip-link {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: var(--z-skip);
+    padding: 0.75rem 1rem;
+    background: var(--color-espresso);
+    color: var(--color-surface);
+    font-size: var(--text-body-sm);
+    font-weight: 500;
+    transform: translateY(calc(-100% - 1.5rem));
+    &:focus {
+      transform: none;
     }
   }
-
-  :focus-visible {
-    outline: 1px solid var(--color-espresso);
-    outline-offset: 3px;
-  }
-
-  .clamp-2 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .clamp-3 {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  /* Enlace subrayado fino */
-  .link {
-    text-decoration: underline;
-    text-underline-offset: 4px;
-    text-decoration-thickness: 1px;
-    text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
-  }
-  .link:hover {
-    text-decoration-color: currentColor;
-  }
-
 }
 
-/* Imagen de card: zoom suave al hover */
+/* Columna fija bajo el header (fotos y formularios que acompañan el scroll de su sección). Sigue al header
+ * cuando se oculta, con la misma transición. Separación con --sticky-offset (2rem por defecto), p. ej.
+ * `md:sticky-aside [--sticky-offset:1.5rem]`. Usar con el prefijo de ancho donde la columna existe. */
+@utility sticky-aside {
+  position: sticky;
+  top: calc(var(--header-h) + var(--sticky-offset, 2rem));
+  transition: top var(--duration-base) var(--ease-out-quint);
+  &:where(html[data-header="hidden"] *) {
+    top: var(--sticky-offset, 2rem);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+/* Itálica real de Hanken (layout.tsx la carga aparte, sin precarga). Solo para las frases que la piden;
+ * nunca con font-display (Gloock no tiene itálica). */
+@utility italic-accent {
+  font-family: var(--font-hanken-italic), var(--font-sans);
+  font-style: italic;
+}
+
+/* Entrada del hero de Inicio: solo CSS, así el texto aparece aunque el JS tarde (y se ve sin JS) */
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+.hero-in {
+  animation: hero-in var(--duration-slow) var(--ease-out-quint) both;
+}
+/* Cortina de la foto del hero de Inicio: entra desde abajo y la imagen se asienta */
+@keyframes hero-clip {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+}
+@keyframes hero-settle {
+  from {
+    transform: scale(1.06);
+  }
+}
+.hero-clip {
+  animation: hero-clip var(--duration-media) var(--ease-out-quint) both;
+}
+.hero-clip img {
+  animation: hero-settle var(--duration-settle) var(--ease-out-quint) both;
+}
+/* Celular acostado con un video en pantalla: el header se oculta (SiteHeader), así que no reserva espacio */
+@media (orientation: landscape) and (max-height: 500px) {
+  html[data-playing] {
+    --header-h: 0px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-in,
+  .hero-clip,
+  .hero-clip img {
+    animation: none;
+  }
+  .sticky-under-header {
+    transition: none;
+  }
+}
+
+/* Imagen de card: se atenúa al tocar y, con mouse y movimiento permitido, zoom suave al pasar */
 .card-media img {
-  transition: transform 1.1s var(--ease-out-expo);
+  transition: opacity var(--duration-fast) var(--ease-out-quint);
 }
-.group:hover .card-media img {
-  transform: scale(1.04);
+.group:active .card-media img {
+  opacity: 0.88;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .card-media img {
+    transition:
+      transform var(--duration-settle) var(--ease-out-quint),
+      opacity var(--duration-fast) var(--ease-out-quint);
+  }
+  .group:hover .card-media img {
+    transform: scale(1.04);
+  }
 }
 
 details > summary::-webkit-details-marker {

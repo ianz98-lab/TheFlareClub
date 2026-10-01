@@ -33,7 +33,7 @@ export const meditations: Meditation[] = [
   mk({
     slug: "soltar-el-dia",
     title: "Soltar el día",
-    description: "Un cierre consciente: agradece lo que pasó, suelta lo que no fue tuyo.",
+    description: "Quince minutos para cerrar el día. Agradeces lo que pasó y sueltas lo que no fue tuyo.",
     videoId: "m-night-1",
     instructorId: "sofi",
     moment: "night",
@@ -54,7 +54,7 @@ export const meditations: Meditation[] = [
   mk({
     slug: "volver-al-presente",
     title: "Volver al presente",
-    description: "Para momentos de estrés: anclas sensoriales y respiración 4-7-8.",
+    description: "Diez minutos con anclas sensoriales y respiración 4-7-8, para momentos de estrés.",
     videoId: "m-stress-1",
     instructorId: "sofi",
     moment: "stress",
@@ -76,7 +76,7 @@ export const meditations: Meditation[] = [
   mk({
     slug: "abrirte-a-recibir",
     title: "Abrirte a recibir",
-    description: "Abundancia y gratitud: una práctica para confiar en que hay suficiente.",
+    description: "Quince minutos de gratitud para confiar en que hay suficiente.",
     videoId: "m-abund-1",
     instructorId: "sofi",
     moment: "abundance",

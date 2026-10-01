@@ -1,11 +1,9 @@
 import type {
   ClassType,
   DurationBucket,
-  EventCategory,
   Feeling,
   Focus,
   Moment,
-  PodcastCategory,
   TagOption,
   TalkCategory,
 } from "./types";
@@ -28,8 +26,8 @@ export const MEDITATION_DURATIONS: TagOption<5 | 10 | 15 | 20>[] = [
 export const CLASS_TYPES: TagOption<ClassType>[] = [
   { value: "pilates", label: "Pilates" },
   { value: "barre", label: "Barre" },
-  { value: "warmup", label: "Warm Up" },
-  { value: "stretching", label: "Stretching" },
+  { value: "warmup", label: "Calentamientos" },
+  { value: "stretching", label: "Estiramientos" },
 ];
 
 export const FOCUS: TagOption<Focus>[] = [
@@ -62,20 +60,12 @@ export const FOCUS_PRIMARY: Focus[] = [
 ];
 
 export const MOMENTS: TagOption<Moment>[] = [
-  { value: "morning", label: "Morning" },
-  { value: "night", label: "Night" },
-  { value: "stress", label: "Stress" },
-  { value: "abundance", label: "Abundance" },
-  { value: "other", label: "Volver a ti" },
+  { value: "morning", label: "Mañana" },
+  { value: "night", label: "Noche" },
+  { value: "stress", label: "Estrés" },
+  { value: "abundance", label: "Abundancia" },
+  { value: "other", label: "Otras" },
 ];
-
-export const MOMENT_DESCRIPTIONS: Record<Moment, string> = {
-  morning: "Para iniciar el día con intención y energía.",
-  night: "Para soltar el día, relajarte y dormir mejor.",
-  stress: "Para calmar la mente y volver al presente.",
-  abundance: "Para abrirte a recibir, agradecer y confiar.",
-  other: "Confianza, amor propio, claridad y volver a ti.",
-};
 
 export const FEELINGS: TagOption<Feeling>[] = [
   { value: "estres", label: "Estrés" },
@@ -100,20 +90,6 @@ export const TALK_CATEGORIES: TagOption<TalkCategory>[] = [
   { value: "productividad", label: "Productividad" },
   { value: "sueno", label: "Sueño" },
   { value: "finanzas", label: "Finanzas personales" },
-];
-
-export const PODCAST_CATEGORIES: TagOption<PodcastCategory>[] = [
-  { value: "relaciones", label: "Relaciones" },
-  { value: "amor-propio", label: "Amor propio" },
-  { value: "ego", label: "Ego" },
-  { value: "percepcion", label: "Percepción" },
-  { value: "crecimiento", label: "Crecimiento personal" },
-  { value: "volver-a-ti", label: "Volver a ti" },
-];
-
-export const EVENT_CATEGORIES: TagOption<EventCategory>[] = [
-  { value: "flare-events", label: "The Flare Club Events" },
-  { value: "night-editions", label: "Night Editions" },
 ];
 
 export function labelOf<T extends string | number>(

@@ -3,9 +3,31 @@
 > Spec funcional entregada por Ian (28-sep-2026). Fuente de verdad para las secciones
 > y el CMS. Diagrama visual: `brand/referencias/sitemap-estructura-web.jpeg`.
 
-## MENÚ PRINCIPAL
-1. Inicio · 2. Movement · 3. Meditaciones · 4. Cursos · 5. Charlas · 6. Workbooks ·
-7. Podcast · 8. Eventos · 9. Corporativo · 10. Nosotras · 11. Mi cuenta
+## MENÚ PRINCIPAL (actualizado 30-sep-2026)
+1. Inicio · 2. Movement · 3. Meditaciones · 4. Workbooks · 5. Charlas · 6. Cursos — Próximamente ·
+7. Podcast · 8. Eventos · 9. Corporativo · 10. Sobre nosotras (`/sobre-nosotras`) · Mi cuenta
+
+> **Cambios pedidos por las fundadoras (CAMBIOS PAGINA WEB.docx, 30-sep-2026).** Donde este spec
+> diga otra cosa, manda esto:
+> - **Arma tu rutina** no es sección del menú: es una herramienta destacada DENTRO de Movement
+>   ("¿No sabes qué hacer hoy?"). Rutinas predeterminadas: Solo 5 (5 min), Muévete 15, Tu media hora (30),
+>   Una hora para ti (60).
+> - "Warm-ups" y "stretching" se dicen **calentamientos** y **estiramientos** en toda la UI.
+> - **Cursos**: "Algo nuevo está por llegar" + lista de espera (sin catálogo por ahora). Se compran aparte
+>   de la membresía.
+> - **Charlas**: charlas EN VIVO con expertos; las grabaciones aparecen después. Hoy: estado vacío +
+>   "Activar notificaciones" por correo.
+> - **Workbooks**: un solo workbook ("Autoconociéndome para decidir de nuevo"), sin filtros ni contador;
+>   la descarga es el CTA principal. Categorías cuando haya suficientes.
+> - **Podcast**: episodios reales de Spotify (sin categorías inventadas).
+> - **Eventos**: "Nos encontramos fuera de la pantalla"; 6 eventos anteriores con flyer y galería; cada
+>   evento a la venta va al link de pago de Recurrente.
+> - **Corporativo**: experiencias para empresas y para marcas (PR, lanzamientos, activaciones); sin
+>   paquetes; formulario: empresa, nombre, teléfono, correo, qué quiere cotizar.
+> - **Mi cuenta**: registro y portal con continuar viendo, clases y videos ya vistos, favoritos, cursos y
+>   eventos comprados, rutinas guardadas. Ver `docs/06-cuentas-y-pagos.md`.
+> - **Inicio** se arma con los mismos textos y datos de cada sección (`src/content/site.ts`), así se
+>   actualiza sola cuando cambia una página.
 
 ---
 

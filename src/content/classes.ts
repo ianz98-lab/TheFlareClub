@@ -12,12 +12,26 @@ const mk = (s: Seed, i: number): MovementClass => ({
   ...s,
 });
 
+/** Zonas en español para las descripciones (los títulos conservan el nombre en inglés de la marca). */
+const ZONA_ES: Record<string, string> = { "Arms": "los brazos", "Abs": "el abdomen", "Glutes": "los glúteos", "Inner Thighs": "los aductores", "Back": "la espalda", "Biceps": "los bíceps", "Shoulders": "los hombros", "Triceps": "los tríceps", "Hamstrings": "los isquiotibiales", "Quads": "los cuádriceps" };
+
+/** Zonas con tren secundario: brazos y espalda suman "Upper Body"; piernas y glúteos, "Lower Body". El abdomen va solo. */
+const UPPER: string[] = ["arms", "back", "biceps", "shoulders", "triceps"];
+
+/** Duración en palabras para las descripciones ("Cinco minutos…"). */
+const MINUTOS: Record<number, string> = { 5: "Cinco", 10: "Diez", 20: "Veinte", 30: "Treinta", 40: "Cuarenta" };
+
+/*
+ * Descripciones semilla: cortas y factuales (zona, duración y equipo), sin "X: Y" ni tríadas.
+ * Las reales las escriben las fundadoras al subir cada clase.
+ */
+
 const seeds: Seed[] = [
-  /* ---------- Warm-ups (shorts, compartidos) ---------- */
+  /* ---------- Calentamientos (cortos, compartidos) ---------- */
   {
     slug: "warm-up-upper-body",
-    title: "Warm Up Upper Body",
-    description: "Activa hombros, brazos y espalda alta antes de cualquier clase de tren superior.",
+    title: "Calentamiento Upper Body",
+    description: "Cinco minutos para preparar el tren superior antes de tu clase. Solo necesitas tu mat.",
     videoId: "wu-upper",
     instructorId: "mariana",
     type: "warmup",
@@ -28,8 +42,8 @@ const seeds: Seed[] = [
   },
   {
     slug: "warm-up-lower-body",
-    title: "Warm Up Lower Body",
-    description: "Caderas, glúteos y piernas listas para trabajar con control.",
+    title: "Calentamiento Lower Body",
+    description: "Cinco minutos para preparar caderas y piernas antes de tu clase. Solo necesitas tu mat.",
     videoId: "wu-lower",
     instructorId: "mariana",
     type: "warmup",
@@ -40,8 +54,8 @@ const seeds: Seed[] = [
   },
   {
     slug: "warm-up-full-body",
-    title: "Warm Up Full Body",
-    description: "Calentamiento completo de 9 minutos para clases de cuerpo entero y Barre.",
+    title: "Calentamiento Full Body",
+    description: "Diez minutos de calentamiento de cuerpo completo, antes de una clase larga o de Barre. Solo necesitas tu mat.",
     videoId: "wu-full",
     instructorId: "sofi",
     type: "warmup",
@@ -69,19 +83,17 @@ const seeds: Seed[] = [
     ([focus, label, videoId, warmupVideoId]): Seed => ({
       slug: `5-min-pilates-${focus}`,
       title: `5 Min Pilates ${label}`,
-      description: `Cinco minutos de trabajo enfocado en ${label.toLowerCase()}. Ideal para sumar a otra clase o para un día corto.`,
+      description: `Cinco minutos enfocados en ${ZONA_ES[label]}. Hazla sola o súmala a otra clase. Solo necesitas tu mat.`,
       videoId,
       warmupVideoId,
       instructorId: "mariana",
       type: "pilates",
       style: "pilates-strength",
       duration: 5,
-      focus: [
-        focus,
-        ...(["arms", "back", "biceps", "shoulders", "triceps"].includes(focus)
-          ? (["upper-body"] as const)
-          : (["lower-body"] as const)),
-      ].filter((f, idx, arr) => arr.indexOf(f) === idx) as Seed["focus"],
+      // "5 Min Pilates Abs" no es Lower Body: el abdomen no suma tren secundario.
+      focus: [focus, ...(UPPER.includes(focus) ? (["upper-body"] as const) : focus === "abs" ? [] : (["lower-body"] as const))].filter(
+        (f, idx, arr) => arr.indexOf(f) === idx,
+      ) as Seed["focus"],
     }),
   ),
 
@@ -89,7 +101,7 @@ const seeds: Seed[] = [
   {
     slug: "10-min-pilates-legs",
     title: "10 Min Pilates Legs",
-    description: "Piernas fuertes y largas con series de control y resistencia.",
+    description: "Diez minutos de piernas, con énfasis en fuerza. Solo necesitas tu mat.",
     videoId: "p10-legs",
     warmupVideoId: "wu-lower",
     instructorId: "mariana",
@@ -102,7 +114,7 @@ const seeds: Seed[] = [
   {
     slug: "10-min-pilates-abs",
     title: "10 Min Pilates Abs",
-    description: "Core profundo: respiración, control y abdominales que se sienten al día siguiente.",
+    description: "Diez minutos de abdomen guiados por la respiración. Solo necesitas tu mat.",
     videoId: "p10-abs",
     warmupVideoId: "wu-full",
     instructorId: "mariana",
@@ -116,7 +128,7 @@ const seeds: Seed[] = [
   {
     slug: "10-min-pilates-arms",
     title: "10 Min Pilates Arms",
-    description: "Brazos tonificados sin pesas: solo tu cuerpo y precisión.",
+    description: "Diez minutos de brazos con el peso de tu cuerpo, sin pesas. Solo necesitas tu mat.",
     videoId: "p10-arms",
     warmupVideoId: "wu-upper",
     instructorId: "mariana",
@@ -130,7 +142,7 @@ const seeds: Seed[] = [
   {
     slug: "20-min-pilates-upper-body",
     title: "20 Min Pilates Upper Body",
-    description: "Hombros, brazos, espalda y core en un flow continuo de veinte minutos.",
+    description: "Veinte minutos de tren superior en un flow continuo. Solo necesitas tu mat.",
     videoId: "p20-upper",
     warmupVideoId: "wu-upper",
     instructorId: "mariana",
@@ -142,7 +154,7 @@ const seeds: Seed[] = [
   {
     slug: "20-min-pilates-lower-body",
     title: "20 Min Pilates Lower Body",
-    description: "Glúteos, piernas e inner thighs con énfasis en fuerza.",
+    description: "Veinte minutos de glúteos y piernas, con énfasis en fuerza. Solo necesitas tu mat.",
     videoId: "p20-lower",
     warmupVideoId: "wu-lower",
     instructorId: "mariana",
@@ -155,7 +167,7 @@ const seeds: Seed[] = [
   {
     slug: "20-min-pilates-full-body",
     title: "20 Min Pilates Full Body",
-    description: "Todo el cuerpo en veinte minutos. La clase perfecta para un día ocupado.",
+    description: "Veinte minutos de cuerpo completo. Solo necesitas tu mat.",
     videoId: "p20-full",
     warmupVideoId: "wu-full",
     instructorId: "mariana",
@@ -170,7 +182,7 @@ const seeds: Seed[] = [
   {
     slug: "30-min-pilates-flow",
     title: "30 Min Pilates Flow",
-    description: "Movimiento fluido, control y conexión. Media hora para volver a tu cuerpo.",
+    description: "Media hora de cuerpo completo en un flow continuo. Nivel intermedio. Solo necesitas tu mat.",
     videoId: "p30-full",
     warmupVideoId: "wu-full",
     instructorId: "mariana",
@@ -183,7 +195,7 @@ const seeds: Seed[] = [
   {
     slug: "40-min-pilates-strength",
     title: "40 Min Pilates Strength",
-    description: "La clase completa: fuerza, resistencia y un cierre de estiramiento.",
+    description: "Cuarenta minutos de fuerza para todo el cuerpo, con estiramiento al final. Nivel intermedio. Solo necesitas tu mat.",
     videoId: "p40-full",
     warmupVideoId: "wu-full",
     instructorId: "mariana",
@@ -200,7 +212,7 @@ const seeds: Seed[] = [
   {
     slug: "barre-20-min",
     title: "Barre 20 Min",
-    description: "Movimientos pequeños e isométricos que esculpen y mejoran la postura.",
+    description: "Veinte minutos de Barre con movimientos pequeños e isométricos. Necesitas tu mat y una silla o una barra.",
     videoId: "b20",
     warmupVideoId: "wu-full",
     instructorId: "mariana",
@@ -214,7 +226,7 @@ const seeds: Seed[] = [
   {
     slug: "barre-40-min",
     title: "Barre 40 Min",
-    description: "La sesión completa de Barre: piernas, glúteos, brazos y core con música que te sostiene.",
+    description: "Cuarenta minutos de Barre para todo el cuerpo. Nivel intermedio. Necesitas tu mat y una silla o una barra; las pesas ligeras son opcionales.",
     videoId: "b40",
     warmupVideoId: "wu-full",
     instructorId: "mariana",
@@ -227,21 +239,21 @@ const seeds: Seed[] = [
     isNew: true,
   },
 
-  /* ---------- Stretching ---------- */
+  /* ---------- Estiramientos ---------- */
   ...(
     [
-      ["upper-body", "Upper Body", 5, "st-upper-5"],
-      ["upper-body", "Upper Body", 10, "st-upper-10"],
-      ["lower-body", "Lower Body", 5, "st-lower-5"],
-      ["lower-body", "Lower Body", 10, "st-lower-10"],
-      ["full-body", "Full Body", 5, "st-full-5"],
-      ["full-body", "Full Body", 10, "st-full-10"],
+      ["upper-body", "Upper Body", "del tren superior", 5, "st-upper-5"],
+      ["upper-body", "Upper Body", "del tren superior", 10, "st-upper-10"],
+      ["lower-body", "Lower Body", "del tren inferior", 5, "st-lower-5"],
+      ["lower-body", "Lower Body", "del tren inferior", 10, "st-lower-10"],
+      ["full-body", "Full Body", "de cuerpo completo", 5, "st-full-5"],
+      ["full-body", "Full Body", "de cuerpo completo", 10, "st-full-10"],
     ] as const
   ).map(
-    ([focus, label, duration, videoId]): Seed => ({
+    ([focus, label, zona, duration, videoId]): Seed => ({
       slug: `stretching-${focus}-${duration}-min`,
-      title: `Stretching ${label} ${duration} Min`,
-      description: `Estiramiento guiado de ${label.toLowerCase()} para cerrar tu clase o soltar tensión.`,
+      title: `Estiramiento ${label} ${duration} Min`,
+      description: `${MINUTOS[duration]} minutos de estiramiento ${zona}, para cerrar tu clase o soltar tensión. Solo necesitas tu mat.`,
       videoId,
       instructorId: "sofi",
       type: "stretching",

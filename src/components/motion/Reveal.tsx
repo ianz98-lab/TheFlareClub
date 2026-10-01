@@ -1,52 +1,99 @@
 "use client";
 
-import { motion, type Variants } from "motion/react";
-import type { ReactNode } from "react";
+import { useEffect, useRef, type HTMLAttributes, type ReactNode, type Ref } from "react";
+import { observeReveal, type RevealKind } from "./reveal-observer";
 
-const variants: Variants = {
-  hidden: { opacity: 0, y: 28, filter: "blur(4px)" },
-  show: (delay: number) => ({
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1], delay },
-  }),
+/*
+ * Entradas al hacer scroll, sin librería de animación (ver reveal-observer.ts): el contenido
+ * llega visible en el HTML y solo lo que empieza bajo el primer pantallazo entra animado.
+ * Una primitiva por tipo de contenido; no envolver párrafos largos, biografías ni formularios.
+ * Para lo que está en el primer pantallazo (hero) usar la clase CSS `.hero-in`, que corre
+ * antes de hidratar.
+ */
+
+type Common = Omit<HTMLAttributes<HTMLElement>, "style" | "children"> & {
+  children?: ReactNode;
+  /** Segundos de espera antes de entrar. */
+  delay?: number;
+  /** Cuánto debe subir en la pantalla antes de entrar (0.15 = cuando su borde pasa el 85 % de la altura). */
+  amount?: number;
 };
 
-/** Aparece al entrar en pantalla: sube suavemente y se desenfoca a nítido. */
-export function Reveal({ children, delay = 0, className = "", as = "div", amount = 0.25 }: { children: ReactNode; delay?: number; className?: string; as?: "div" | "section" | "li" | "span"; amount?: number }) {
-  const Tag = motion[as];
+function useReveal(kind: RevealKind, delay: number, amount: number) {
+  const ref = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    return el ? observeReveal(el, { kind, delay, amount }) : undefined;
+  }, [kind, delay, amount]);
+  return ref;
+}
+
+type BlockTag = "div" | "section" | "article" | "aside" | "header" | "footer" | "li" | "span" | "p" | "figure";
+
+/** Bloques cortos (tarjetas, CTAs, una cita): suben 1rem y aparecen. `kind="fade"`: solo opacidad. */
+export function Reveal({ as = "div", kind = "rise", delay = 0, amount = 0.15, children, ...rest }: Common & { as?: BlockTag; kind?: "rise" | "fade" }) {
+  const ref = useReveal(kind, delay, amount);
+  const Tag = as as "div";
   return (
-    <Tag className={className} variants={variants} initial="hidden" whileInView="show" viewport={{ once: true, amount }} custom={delay}>
+    <Tag ref={ref as Ref<HTMLDivElement>} {...rest}>
       {children}
     </Tag>
   );
 }
 
-/** Contenedor que revela a sus hijos en cascada. */
-export function Stagger({ children, className = "", step = 0.07 }: { children: ReactNode; className?: string; step?: number }) {
+/**
+ * Titulares (h1/h2 principales): suben 0.4em por líneas. Cada hijo directo es una línea:
+ * `<RevealHeading as="h2"><span className="block">Todo cambia</span><span className="block">…</span></RevealHeading>`.
+ * Con texto corrido, sube el titular entero.
+ */
+export function RevealHeading({ as = "h2", delay = 0, amount = 0.15, children, ...rest }: Common & { as?: "h1" | "h2" | "h3" | "p" | "div" }) {
+  const ref = useReveal("heading", delay, amount);
+  const Tag = as as "h2";
   return (
-    <motion.div
-      className={className}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.15 }}
-      variants={{ hidden: {}, show: { transition: { staggerChildren: step } } }}
-    >
+    <Tag ref={ref as Ref<HTMLHeadingElement>} {...rest}>
       {children}
-    </motion.div>
+    </Tag>
   );
 }
 
-export const item: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
+/**
+ * Fotos: cortina que sube (clip-path) y la imagen se asienta de 1.06 a 1. Envuelve el
+ * contenedor de la foto (el que tiene `relative` y el tamaño), no la <Image> suelta.
+ */
+export function RevealImage({ as = "div", delay = 0, amount = 0.15, children, ...rest }: Common & { as?: "div" | "figure" | "span" }) {
+  const ref = useReveal("image", delay, amount);
+  const Tag = as as "div";
+  return (
+    <Tag ref={ref as Ref<HTMLDivElement>} {...rest}>
+      {children}
+    </Tag>
+  );
+}
+
+type ListProps = Omit<Common, "delay"> & {
+  as?: "div" | "ul" | "ol" | "section";
+  /** Segundos entre filas que entran juntas (por defecto 0.04; el total nunca pasa de 0.25). */
+  step?: number;
 };
 
-export function StaggerItem({ children, className = "" }: { children: ReactNode; className?: string }) {
+/**
+ * Filas de una lista o grilla: cada hijo directo aparece (solo opacidad) cuando llega a la
+ * pantalla; las que llegan juntas, con 40 ms entre una y otra (250 ms como máximo).
+ * Se registran al montar: las filas que se agregan después (filtros) aparecen sin animación.
+ */
+export function RevealList({ as = "div", amount = 0.15, step, children, ...rest }: ListProps) {
+  const ref = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const list = ref.current;
+    if (!list) return;
+    const group = { step };
+    const stops = Array.from(list.children).map((row) => observeReveal(row as HTMLElement, { kind: "fade", amount, group }));
+    return () => stops.forEach((stop) => stop());
+  }, [amount, step]);
+  const Tag = as as "div";
   return (
-    <motion.div className={className} variants={item}>
+    <Tag ref={ref as Ref<HTMLDivElement>} {...rest}>
       {children}
-    </motion.div>
+    </Tag>
   );
 }

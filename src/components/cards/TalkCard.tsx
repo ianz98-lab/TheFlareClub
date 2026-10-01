@@ -12,6 +12,7 @@ export function TalkCard({ t, size = "grid" }: { t: Talk; size?: "grid" | "row" 
     <MediaCard
       href={`/charlas/${t.slug}`}
       image={video.thumbnail}
+      focal={video.thumbnailFocal}
       title={t.title}
       subtitle={`${expert.name} · ${t.specialty}`}
       meta={`${t.durationMin} min · ${labelOf(TALK_CATEGORIES, t.category)}`}
@@ -20,7 +21,7 @@ export function TalkCard({ t, size = "grid" }: { t: Talk; size?: "grid" | "row" 
       aspect="aspect-[4/3]"
       badges={
         <>
-          {t.isNew && <Badge tone="terracotta">Nuevo</Badge>}
+          {t.isNew && <Badge tone="accent">Nuevo</Badge>}
           <AccessBadge access={t.access} />
         </>
       }

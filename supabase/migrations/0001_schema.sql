@@ -13,16 +13,6 @@ create type class_style as enum ('pilates-flow', 'pilates-strength', 'barre', 'w
 create type meditation_moment as enum ('morning', 'night', 'stress', 'abundance', 'other');
 create type event_status as enum ('upcoming', 'past', 'soldout');
 create type plan_kind as enum ('personal', 'corporate');
-create type subscription_status as enum ('trialing', 'active', 'past_due', 'canceled', 'incomplete');
-
--- ---------- perfiles ----------
-create table profiles (
-  id uuid primary key references auth.users(id) on delete cascade,
-  full_name text,
-  email text,
-  role text not null default 'member' check (role in ('member', 'admin')),
-  created_at timestamptz not null default now()
-);
 
 -- ---------- assets ----------
 create table videos (
@@ -211,7 +201,7 @@ create table events (
   recurrente_product_id text
 );
 
--- ---------- Planes y membresías (cobro con Recurrente) ----------
+-- ---------- Planes (cobro con Recurrente; membresías y compras en 0002) ----------
 create table plans (
   id uuid primary key default gen_random_uuid(),
   slug text unique not null,
@@ -227,73 +217,6 @@ create table plans (
   active boolean not null default true
 );
 
-create table subscriptions (
-  id uuid primary key default gen_random_uuid(),
-  user_id uuid not null references profiles(id) on delete cascade,
-  plan_id uuid references plans(id),
-  status subscription_status not null,
-  recurrente_customer_id text,
-  recurrente_subscription_id text unique,
-  current_period_end timestamptz,
-  cancel_at_period_end boolean not null default false,
-  created_at timestamptz not null default now()
-);
-create index on subscriptions (user_id);
-
--- Compras individuales (cursos, workbooks, eventos)
-create table purchases (
-  id uuid primary key default gen_random_uuid(),
-  user_id uuid not null references profiles(id) on delete cascade,
-  content_type text not null,
-  content_id uuid not null,
-  recurrente_checkout_id text,
-  amount_cents int,
-  created_at timestamptz not null default now(),
-  unique (user_id, content_type, content_id)
-);
-
--- ---------- Actividad de usuaria ----------
-create table favorites (
-  user_id uuid not null references profiles(id) on delete cascade,
-  content_type text not null,
-  content_id uuid not null,
-  created_at timestamptz not null default now(),
-  primary key (user_id, content_type, content_id)
-);
-
-create table watch_progress (
-  user_id uuid not null references profiles(id) on delete cascade,
-  video_id uuid not null references videos(id) on delete cascade,
-  content_key text not null,                       -- "class:<id>" | "lesson:<course>:<lesson>" ...
-  position_sec int not null default 0,
-  completed boolean not null default false,
-  updated_at timestamptz not null default now(),
-  primary key (user_id, content_key)
-);
-
-create table course_progress (
-  user_id uuid not null references profiles(id) on delete cascade,
-  lesson_id uuid not null references course_lessons(id) on delete cascade,
-  completed_at timestamptz not null default now(),
-  primary key (user_id, lesson_id)
-);
-
--- ---------- Corporativo ----------
-create table corporate_leads (
-  id uuid primary key default gen_random_uuid(),
-  name text not null,
-  company text not null,
-  position text,
-  email text not null,
-  phone text,
-  headcount int,
-  experience_type text,
-  approx_date date,
-  message text,
-  status text not null default 'new',
-  created_at timestamptz not null default now()
-);
-
 -- ---------- Textos e imágenes editables sin código ----------
 create table site_settings (
   key text primary key,
@@ -301,22 +224,35 @@ create table site_settings (
   updated_at timestamptz not null default now()
 );
 
--- ---------- RLS (base) ----------
-alter table profiles enable row level security;
-alter table favorites enable row level security;
-alter table watch_progress enable row level security;
-alter table course_progress enable row level security;
-alter table subscriptions enable row level security;
-alter table purchases enable row level security;
-alter table corporate_leads enable row level security;
-
-create policy "own profile" on profiles for all using (auth.uid() = id);
-create policy "own favorites" on favorites for all using (auth.uid() = user_id);
-create policy "own progress" on watch_progress for all using (auth.uid() = user_id);
-create policy "own course progress" on course_progress for all using (auth.uid() = user_id);
-create policy "own subscriptions" on subscriptions for select using (auth.uid() = user_id);
-create policy "own purchases" on purchases for select using (auth.uid() = user_id);
-create policy "anyone can create lead" on corporate_leads for insert with check (true);
+-- Cuentas, favoritos, historial, membresías, compras y formularios: ver 0002_cuentas.sql
+-- (claves de contenido en texto mientras el contenido vive en src/content).
 
 -- Contenido: lectura pública de metadatos; el gating de video se hace en el servidor
 -- (el provider_id de Vimeo solo se entrega si la usuaria tiene acceso).
+
+-- RLS: sin esto la API pública podría escribir en el catálogo. Lectura pública, escritura
+-- solo con service role (panel admin de la Fase 3). El grant es explícito porque hay
+-- proyectos que no exponen las tablas nuevas a la API por defecto (si ya lo hacen, no cambia nada).
+do $$
+declare t text;
+begin
+  foreach t in array array['videos','instructors','tags','content_tags','classes','meditations','courses',
+    'course_modules','course_lessons','course_workbooks','talks','workbooks','podcast_episodes','events',
+    'plans','site_settings']
+  loop
+    execute format('alter table public.%I enable row level security', t);
+    execute format('create policy "lectura pública" on public.%I for select to anon, authenticated using (true)', t);
+    execute format('grant select on public.%I to anon, authenticated', t);
+    execute format('grant all on public.%I to service_role', t);
+  end loop;
+end $$;
+
+-- Columnas que NO salen por la API pública: el id de Vimeo (videos.provider_id) y los recursos
+-- de las lecciones (course_lessons.resources) son la llave del contenido para miembros o de
+-- pago. La política deja leer las filas, pero solo estas columnas; los datos protegidos los
+-- entrega una Edge Function que valida membresía o compra. Ojo: las consultas públicas tienen
+-- que listar columnas (`select=*` responde "permission denied").
+revoke select on public.videos from anon, authenticated;
+grant select (id, provider, duration_sec, thumbnail, kind, created_at) on public.videos to anon, authenticated;
+revoke select on public.course_lessons from anon, authenticated;
+grant select (id, module_id, title, video_id, duration_min, sort) on public.course_lessons to anon, authenticated;

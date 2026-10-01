@@ -19,3 +19,11 @@ npm-debug.log*
 
 # fotos originales pesadas (las versiones web viven en public/images)
 brand/fotos/_originales.zip
+
+# material que envían las fundadoras (zips de fotos originales, documentos de cambios):
+# las versiones web viven en public/images; los originales se quedan fuera del repo
+/*.zip
+/*.docx
+# variantes livianas de fotos: se generan solas antes de cada build (scripts/fotos/variantes.mjs)
+public/images/**/*.w[0-9]*.jpg
+public/images/**/*.w[0-9]*.webp

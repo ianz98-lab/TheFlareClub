@@ -1,5 +1,11 @@
 import type { Talk } from "./types";
 
+/**
+ * Charlas. Hoy NO hay grabaciones publicadas: estas son muestras del prototipo y no se
+ * listan en la web (la página muestra un estado vacío). Al subir la primera grabación real,
+ * agregarla con `published: true`.
+ */
+
 export const talks: Talk[] = [
   {
     id: "talk-nutricion",
@@ -73,4 +79,5 @@ export const talks: Talk[] = [
   },
 ];
 
-export const talkBySlug = (slug: string) => talks.find((t) => t.slug === slug);
+/** Lo único que se muestra en la web */
+export const publishedTalks = talks.filter((t) => t.published);

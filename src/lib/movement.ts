@@ -1,44 +1,48 @@
-import { classes } from "@/content/classes";
-import type { ClassType, DurationBucket, Focus, MovementClass } from "@/content/types";
+import type { ClassStyle, ClassType, Level } from "@/content/types";
+import { totalMinutes, type Routine, type RoutinePreset } from "@/lib/routine";
 
-export interface MovementFilters {
-  duration?: DurationBucket[];
-  type?: ClassType[];
-  focus?: Focus[];
-  q?: string;
+/* ---------- textos visibles (los slugs internos warmup/stretching nunca se muestran) ---------- */
+
+/** Tipo en singular para tarjetas y detalle: "Calentamiento", no "Calentamientos" (esas son las pestañas). */
+export const CLASS_TYPE_SINGULAR: Record<ClassType, string> = {
+  pilates: "Pilates",
+  barre: "Barre",
+  warmup: "Calentamiento",
+  stretching: "Estiramiento",
+};
+
+/** Estilo de la clase. Pilates Flow / Strength y Barre en inglés, como los usa la marca. */
+export const CLASS_STYLE_LABEL: Record<ClassStyle, string> = {
+  "pilates-flow": "Pilates Flow",
+  "pilates-strength": "Pilates Strength",
+  barre: "Barre",
+  warmup: "Calentamiento",
+  stretching: "Estiramiento",
+};
+
+export const LEVEL_LABEL: Record<Level, string> = {
+  todos: "Todos los niveles",
+  principiante: "Principiante",
+  intermedio: "Intermedio",
+  avanzado: "Avanzado",
+};
+
+/* ---------- rutinas (herramienta de Movement) ---------- */
+
+/**
+ * "Calentamiento · 1 clase · estiramiento · meditación": en el orden en que se reproduce y con
+ * mayúscula inicial. Única fuente para describir una rutina (constructor y Mi cuenta).
+ */
+export function describeRoutine(r: Routine): string {
+  const n = r.classes.length;
+  const text = [r.warmup && "calentamiento", n > 0 && `${n} ${n === 1 ? "clase" : "clases"}`, r.stretch && "estiramiento", r.close && "meditación"]
+    .filter(Boolean)
+    .join(" · ");
+  return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
-type SP = Record<string, string | string[] | undefined>;
+/** "5 min — Reset rápido" (la clase .label lo pone en mayúsculas) */
+export const presetLabel = (p: RoutinePreset) => `${totalMinutes(p)} min — ${p.kicker}`;
 
-const list = (v: string | string[] | undefined): string[] =>
-  !v ? [] : Array.isArray(v) ? v : v.split(",").filter(Boolean);
-
-export function parseMovementFilters(sp: SP): MovementFilters {
-  return {
-    duration: list(sp.duration).map(Number).filter(Boolean) as DurationBucket[],
-    type: list(sp.type) as ClassType[],
-    focus: list(sp.focus) as Focus[],
-    q: typeof sp.q === "string" ? sp.q : undefined,
-  };
-}
-
-export function filterClasses(f: MovementFilters, source: MovementClass[] = classes) {
-  return source.filter((c) => {
-    if (f.duration?.length && !f.duration.includes(c.duration)) return false;
-    if (f.type?.length && !f.type.includes(c.type)) return false;
-    if (f.focus?.length && !f.focus.some((x) => c.focus.includes(x))) return false;
-    if (f.q && !c.title.toLowerCase().includes(f.q.toLowerCase())) return false;
-    return true;
-  });
-}
-
-export const activeFilterCount = (f: MovementFilters) =>
-  (f.duration?.length ?? 0) + (f.type?.length ?? 0) + (f.focus?.length ?? 0);
-
-/** Agrupa la biblioteca como la define el spec: Pilates Mat / Barre / Warm Ups / Stretching */
-export const MOVEMENT_SECTIONS: { type: ClassType; title: string; blurb: string }[] = [
-  { type: "pilates", title: "Pilates Mat", blurb: "Flow y Strength. De 5 minutos por zona a clases completas de 40." },
-  { type: "barre", title: "Barre", blurb: "Movimientos pequeños, isométricos, que esculpen y mejoran tu postura." },
-  { type: "warmup", title: "Warm Ups", blurb: "Shorts de calentamiento que se comparten entre clases. Cinco a diez minutos." },
-  { type: "stretching", title: "Stretching", blurb: "Para cerrar tu clase o soltar tensión en cualquier momento del día." },
-];
+/** Abre el constructor con la rutina predeterminada cargada y lista para "Empezar". */
+export const presetHref = (p: RoutinePreset) => `/rutina?preset=${p.id}`;

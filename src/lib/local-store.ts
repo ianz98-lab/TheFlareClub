@@ -65,7 +65,7 @@ export function useLocal<T>(key: string, fallback: T): T {
 export const KEYS = {
   favorites: "tfc:favorites",
   progress: "tfc:progress",
-  courseProgress: "tfc:course-progress",
 } as const;
 
-export type ProgressMap = Record<string, { at: number; pct: number }>;
+/** at = última vez que se abrió · pct = avance aprox. · done = cuándo se marcó como vista */
+export type ProgressMap = Record<string, { at: number; pct: number; done?: number }>;

@@ -1,31 +1,34 @@
 # Pricing
 
-## Personales (estructura clara, pública)
+> Definido por las fundadoras el 30-sep-2026 ("CAMBIOS PAGINA WEB.docx"). Código: `src/content/plans.ts`.
 
-| Plan | Precio (propuesta) | Incluye |
+## Membresía personal
+
+| Plan | Precio | Incluye |
 |---|---|---|
-| **Flare Mensual** | USD 19 /mes | Todo Movement + Meditaciones + Charlas + Workbooks de membresía. Cancela cuando quieras. |
-| **Flare Anual** | USD 190 /año (2 meses gratis) | Todo lo del mensual + acceso anticipado a cursos + 15% en eventos. |
-| **Prueba gratis** | 7 días | Acceso completo; pide tarjeta, no cobra hasta el día 8. |
+| **Flare Mensual** | USD 15 / mes | Todas las clases de Movement, Arma tu rutina, biblioteca de meditaciones, charlas y sus grabaciones, workbooks incluidos en membresía, favoritos y continuar viendo, nuevo contenido conforme se publique. |
+| **Flare Anual** | USD 165 / año | Exactamente lo mismo. El incentivo es el precio: **ahorra USD 15** (12 × 15 = 180). |
+| **Prueba gratis** | 7 días | "7 días gratis. Cancela cuando quieras." Se pide tarjeta; se renueva automáticamente salvo que se cancele antes. |
 
-Añadidos de pago individual: cursos premium, workbooks premium, entradas a eventos.
+Letra pequeña bajo cada botón:
+- Mensual: "Después de los 7 días gratis, tu membresía se renovará automáticamente por USD 15 al mes hasta que decidas cancelarla."
+- Anual: "… por USD 165 al año hasta que decidas cancelarla."
 
-> Los montos son placeholders para diseñar la página; los definitivos los definen Ian y
-> las fundadoras. Referencias: fitbyyou.com (pricing por país/moneda, sin permanencia,
-> cancelación 48 h antes de renovar) y bybala.com.mx (trial + código promocional de 15%).
-> Sugerencia: precios en USD con opción GTQ/MXN según país.
+Decisiones:
+- **Sin "Más elegido"** en el anual al lanzar: todavía no hay datos. Se puede poner cuando los haya.
+- **Sin beneficios extra en el anual** (se quitaron: acceso anticipado a cursos, 15% en eventos, workbook premium,
+  comunidad privada) salvo que las fundadoras decidan comprometerse a darlos.
 
-## Empresariales (flexibles, se cotizan)
+## Se compra aparte (no entra en la membresía)
+- **Cursos**: cada curso se compra por separado (hoy están "Próximamente", con lista de espera).
+- **Eventos**: cada evento tiene su link de pago de Recurrente (`ticketUrl` en `src/content/events.ts`).
 
-| Paquete | Modelo | Ejemplo |
-|---|---|---|
-| **Team** | N asientos de membresía a precio por asiento decreciente | 10 a 50 colaboradores |
-| **Experiencia** | Evento único presencial u online | Pilates + meditación + journaling en la oficina |
-| **Programa anual de bienestar** | Retainer mensual: contenido + sesiones en vivo + charlas | Empresas grandes |
-
-Todo lo corporativo entra por el formulario "Cotiza una experiencia" (`/corporativo`) y
-se gestiona como lead; el pricing se arma a medida.
+## Empresas y marcas
+Ya no hay paquetes con precio (Team / Experiencia / Programa anual). Todo entra por el formulario
+"Cotiza una experiencia" (`/corporativo#cotizar`): experiencias para colaboradores y para marcas (PR, lanzamientos,
+activaciones), cotizadas a la medida. Los datos llegan a la tabla `leads` (tipo `corporativo`).
 
 ## Cobro
-Todo se cobra con **Recurrente** (checkout + suscripciones recurrentes, GTQ/USD). Cada plan
-guarda su `recurrente_product_id`; el webhook de Recurrente activa/cancela la membresía.
+Todo se cobra con **Recurrente**. Membresías y cursos: checkout creado por la Edge Function `crear-checkout`
+(con la usuaria en la metadata); eventos: link público. El webhook `recurrente-webhook` activa membresías y registra
+compras. Detalle y checklist de activación en `docs/06-cuentas-y-pagos.md`.

@@ -4,8 +4,21 @@
     {
       "name": "theflareclub-dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "port": 3000
+    },
+    {
+      "name": "theflareclub-pages",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "preview:pages"
+      ],
+      "port": 4173,
+      "url": "http://localhost:4173"
     }
   ]
 }

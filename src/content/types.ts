@@ -15,8 +15,12 @@ export interface Video {
   providerId: string;
   durationSec: number;
   thumbnail: string;
+  /** object-position de la miniatura al recortarla (tarjetas 4:5, póster 16:9). Ej. "center 30%" */
+  thumbnailFocal?: string;
   /** Warm-ups y shorts se marcan aquí para poder reutilizarlos */
   kind: "class" | "warmup" | "meditation" | "lesson" | "talk";
+  /** Id de muestra (aún no hay video real en Vimeo): el player no monta el iframe */
+  placeholder?: boolean;
 }
 
 export interface Instructor {
@@ -27,7 +31,10 @@ export interface Instructor {
   /** Frase corta de posicionamiento (ej. "Movement, mindset & conscious living.") */
   tagline?: string;
   photo: string;
+  /** Bio corta (tarjetas, charlas) */
   bio: string;
+  /** Bio completa en párrafos para "Sobre nosotras" */
+  longBio?: string[];
   founder?: boolean;
 }
 
@@ -170,6 +177,8 @@ export interface Talk {
   featured?: boolean;
   isNew?: boolean;
   publishedAt: string;
+  /** Solo las grabaciones publicadas aparecen en la web (las demás son muestra del prototipo) */
+  published?: boolean;
 }
 
 /* ---------------- Workbooks ---------------- */
@@ -180,32 +189,30 @@ export interface Workbook {
   title: string;
   description: string;
   cover: string;
+  /** Ruta pública del PDF (public/workbooks/...) */
   fileUrl: string;
   pages: number;
   access: "free" | "member" | "paid";
   price?: number;
   featured?: boolean;
+  /** Link de pago de Recurrente si es de pago individual */
+  checkoutUrl?: string;
 }
 
 /* ---------------- Podcast ---------------- */
 
-export type PodcastCategory =
-  | "relaciones"
-  | "amor-propio"
-  | "ego"
-  | "percepcion"
-  | "crecimiento"
-  | "volver-a-ti";
-
+/** Episodio real de Spotify (título, descripción, duración, fecha e imagen tal como aparecen allá). */
 export interface PodcastEpisode {
   id: string;
+  /** Número de episodio (del más viejo = 1 al más nuevo) */
   number: number;
   title: string;
   description: string;
+  /** Imagen del episodio (CDN de Spotify, i.scdn.co) */
   image: string;
   durationMin: number;
   spotifyUrl: string;
-  category: PodcastCategory;
+  /** YYYY-MM-DD */
   publishedAt: string;
 }
 
@@ -213,38 +220,65 @@ export interface PodcastEpisode {
 
 export type EventCategory = "flare-events" | "night-editions";
 
+/** Foto con dimensiones reales (para grillas sin saltos y recortes correctos). */
+export interface Photo {
+  src: string;
+  width: number;
+  height: number;
+  alt?: string;
+  /** object-position sugerido al recortar, ej. "center 30%" */
+  focal?: string;
+}
+
 export interface FlareEvent {
   id: string;
   slug: string;
   title: string;
-  image: string;
+  /** Línea corta bajo el título: lema, invitada especial, edición */
+  subtitle?: string;
+  /** Portada oficial (post 4:5 o story 9:16). Si no hay, se usa una tarjeta tipográfica. */
+  cover?: Photo;
   startsAt: string;
   endsAt?: string;
+  /** Reemplaza SOLO la fecha (sin día de la semana) cuando no está confirmada; la hora sale de startsAt/endsAt */
+  dateLabel?: string;
   location: string;
+  /** Zona / ciudad corta para tarjetas */
+  area?: string;
   description: string;
-  price: number;
-  currency: "USD" | "GTQ" | "MXN";
+  price?: number;
+  currency: "USD" | "GTQ";
   includes: string[];
   category: EventCategory;
   status: "upcoming" | "past" | "soldout";
-  gallery?: string[];
+  /** Galería del evento (solo pasados) */
+  gallery?: Photo[];
+  /** Link de pago de Recurrente. Todo evento a la venta debe tenerlo. */
   ticketUrl?: string;
+  /** Aún sin venta: se muestra "Únete a la lista de espera" */
+  waitlist?: boolean;
+  /** Invitada especial, si hubo */
+  guest?: string;
 }
 
 /* ---------------- Planes ---------------- */
 
 export interface Plan {
   id: string;
-  /** id del producto/plan en Recurrente (se llena en Fase 2) */
+  /** id del producto/plan en Recurrente (se llena al crear el producto) */
   recurrenteProductId?: string;
+  /** Link de checkout de Recurrente para la suscripción (con prueba de 7 días) */
+  checkoutUrl?: string;
   name: string;
   kind: "personal" | "corporate";
   price?: number;
   currency?: "USD";
   period?: "mes" | "año";
-  tagline: string;
+  /** Frase bajo el nombre (ej. "Ahorra USD 15 al elegir el plan anual.") */
+  tagline?: string;
   features: string[];
-  highlight?: boolean;
+  /** Texto legal pequeño bajo el botón */
+  finePrint?: string;
   cta: string;
 }
 

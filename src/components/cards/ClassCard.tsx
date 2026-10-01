@@ -1,7 +1,8 @@
 import type { MovementClass } from "@/content/types";
 import { videoById } from "@/content/videos";
 import { Badge, AccessBadge } from "@/components/ui/Badge";
-import { CLASS_TYPES, FOCUS, labelOf } from "@/content/taxonomies";
+import { FOCUS, labelOf } from "@/content/taxonomies";
+import { CLASS_TYPE_SINGULAR } from "@/lib/movement";
 import { MediaCard } from "./MediaCard";
 
 export function ClassCard({ c, size = "grid" }: { c: MovementClass; size?: "grid" | "row" }) {
@@ -11,15 +12,17 @@ export function ClassCard({ c, size = "grid" }: { c: MovementClass; size?: "grid
     <MediaCard
       href={`/movement/${c.slug}`}
       image={video.thumbnail}
+      focal={video.thumbnailFocal}
       title={c.title}
       subtitle={focus}
-      meta={`${c.duration} min · ${labelOf(CLASS_TYPES, c.type)}`}
+      // "5 min · Calentamiento": tipo en singular y en español
+      meta={`${c.duration} min · ${CLASS_TYPE_SINGULAR[c.type]}`}
       favoriteKey={`class:${c.id}`}
       size={size}
       aspect="aspect-[3/2]"
       badges={
         <>
-          {c.isNew && <Badge tone="terracotta">Nuevo</Badge>}
+          {c.isNew && <Badge tone="accent">Nuevo</Badge>}
           <AccessBadge access={c.access} />
         </>
       }

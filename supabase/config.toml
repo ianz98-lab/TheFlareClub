@@ -1,0 +1,19 @@
+# Supabase CLI · The Flare Club
+# Por ahora solo se usa para desplegar las Edge Functions. El proyecto remoto se enlaza con
+#   npx supabase link --project-ref jqaxonrzbyjppuqvppfw
+# Ver docs/06-cuentas-y-pagos.md.
+project_id = "theflareclub"
+
+# Recurrente no manda un JWT de Supabase: la función verifica la firma Svix por su cuenta.
+[functions.recurrente-webhook]
+verify_jwt = false
+
+# La llama el navegador con la sesión de la usuaria. El JWT se valida DENTRO de la función
+# contra Auth (sirve con llaves legacy y con las nuevas sb_publishable/sb_secret) y la función
+# responde el preflight de CORS; por eso la puerta no exige JWT.
+[functions.crear-checkout]
+verify_jwt = false
+
+# Igual que crear-checkout: la llama el navegador con la sesión de la usuaria y valida el JWT por dentro.
+[functions.cancelar-membresia]
+verify_jwt = false
